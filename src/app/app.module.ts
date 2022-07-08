@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { ResultsComponent } from './components/results/results.component';
 import { ResultComponent } from './components/result/result.component';
 import { StatsComponent } from './components/stats/stats.component';
+import { MatchesComponent } from './components/matches/matches.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResultsComponent,
     ResultComponent,
-    StatsComponent
+    StatsComponent,
+    MatchesComponent
   ],
   imports: [
     BrowserModule,
