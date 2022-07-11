@@ -5,16 +5,17 @@
     <form>
       <div class="form-group">
         <p>Хотите распарсить matches?</p>
-        <input type="radio" id="radio1" name="radioButton" value="yesRadio">
+        <input type="radio" id="radio1" name="radioButton" value="yesRadio" (click)="answer(1)">
         <label for="radio1"><b>Да</b></label>
         <br>
-        <input type="radio" id="radio2" name="radioButton" value="noRadio" checked>
+        <input type="radio" id="radio2" name="radioButton" value="noRadio" checked (click)="answer(0)">
         <label for="radio2"><b>Нет</b></label>
       </div>
       <div class="form-group">
-        <button (click)="solution()" class="btn btn-success" [disabled]="solut"> {{getButtonText()}} </button>
+        <button (click)="solution()" class="btn btn-success" [disabled]="pressButton==1"> {{getButtonText()}} </button>
       </div>
     </form>
-    <div *ngIf="solut==false" class="form-text text-danger">Ничего не выйдет</div>
+    <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
+    <div *ngIf="pressButton==0" class="form-text text-danger">Ничего не выйдет</div>
   </div>
 </div>

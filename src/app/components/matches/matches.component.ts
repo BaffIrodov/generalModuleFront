@@ -20,8 +20,27 @@ export class MatchesComponent implements OnInit {
   }
 
   solut = false;
+  pressButton = -1;
 
   solution(): void {
+    if (this.solut == false) {
+      this.pressButton = 0;
+    } else {
+      this.resetButton();
+    }
+  }
 
+  answer(ans: number): void {
+    if (ans == 1) {
+      this.solut = true;
+    } else {
+      this.solut = false;
+    }
+  }
+
+  async resetButton() {
+    this.pressButton = 1;
+    new Promise(f => setTimeout(f, 2000))
+      .finally(() => this.pressButton = -1);
   }
 }
