@@ -26,6 +26,11 @@ export class MatchesComponent implements OnInit {
     if (this.solut == false) {
       this.pressButton = 0;
     } else {
+      this.matchesService.writeMatchesLinks().subscribe({
+        next: (size) => {
+          console.log(size);
+        }, error: (e) => console.error(e)
+      });
       this.resetButton();
     }
   }
