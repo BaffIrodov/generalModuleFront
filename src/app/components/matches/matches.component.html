@@ -17,5 +17,16 @@
     </form>
     <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
     <div *ngIf="pressButton==0" class="form-text text-danger">Ничего не выйдет</div>
+    <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
   </div>
+  <table border="2" *ngIf="matches">
+    <thead>
+    <tr>
+      <th>Ссылки</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let link of links">
+      <td>{{link}}</td>
+    </tr>
+  </table>
 </div>

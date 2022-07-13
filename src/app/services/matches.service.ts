@@ -11,7 +11,8 @@ export class MatchesService {
 
   constructor(private http: HttpClient) { }
 
-  writeMatchesLinks(): Observable<Number>{
-    return this.http.post<Number>(url + 'write-links', Number);
+  writeMatchesLinks(): Observable<Array<Object>>{
+    const matches = {id: Number, link: String};
+    return this.http.post<Array<Object>>(url + 'write-links', matches);
   }
 }

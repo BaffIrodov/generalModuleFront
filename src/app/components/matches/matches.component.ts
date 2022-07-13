@@ -21,14 +21,18 @@ export class MatchesComponent implements OnInit {
 
   solut = false;
   pressButton = -1;
+  matches: Number;
+  links = ["1", "2", "3", "4", "5"];
 
   solution(): void {
     if (this.solut == false) {
       this.pressButton = 0;
+      this.matches = 0;
     } else {
       this.matchesService.writeMatchesLinks().subscribe({
-        next: (size) => {
-          console.log(size);
+        next: (matchesLink) => {
+          console.log(matchesLink);
+          this.matches = matchesLink.length;
         }, error: (e) => console.error(e)
       });
       this.resetButton();
