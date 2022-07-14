@@ -68,9 +68,7 @@ import { MatchesComponent } from './components/matches/matches.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    TableModule,
-    DropdownModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

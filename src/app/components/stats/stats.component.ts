@@ -10,8 +10,28 @@ export class StatsComponent implements OnInit {
 
   constructor(private statsService: StatsService) { }
 
-  ngOnInit(): void {
+  writeButtonIsAvailable = false;
 
+  ngOnInit(): void {
+    console.log("statsWorks!");
+  }
+
+  writePlayers(): void {
+    this.statsService.writeStatsPlayers()
+      .subscribe({
+        next: (res) => {
+          console.log("Должен возвращаться номер");
+          console.log(res);
+        },
+        error: (e) => console.error(e)
+      });
+    this.disableWriteButton();
+  }
+
+  async disableWriteButton() {
+    this.writeButtonIsAvailable = true;
+    new Promise(f => setTimeout(f, 10000))
+      .finally(() => this.writeButtonIsAvailable = false);
   }
 
 }
