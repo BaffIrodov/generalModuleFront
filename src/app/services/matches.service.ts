@@ -7,12 +7,15 @@ const url = 'http://localhost:8080/matches/';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MatchesService {
 
   constructor(private http: HttpClient) { }
 
-  writeMatchesLinks(): Observable<Array<Object>>{
-    const matches = {id: Number, link: String};
-    return this.http.post<Array<Object>>(url + 'write-links', matches);
+  writeMatchesLinks(): Observable<Array<String>>{
+    return this.http.post<Array<String>>(url + 'write-links', Array<String>);
   }
+  /*writeMatchesLinks(): Observable<Array<{id: number, link: String}>>{
+    return this.http.post<Array<{id: number, link: String}>>(url + 'write-links', Array<{id: number, link: String}>);
+  }*/
 }

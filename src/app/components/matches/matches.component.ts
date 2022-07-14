@@ -22,7 +22,7 @@ export class MatchesComponent implements OnInit {
   solut = false;
   pressButton = -1;
   matches: Number;
-  links = ["1", "2", "3", "4", "5"];
+  links: String[];
 
   solution(): void {
     if (this.solut == false) {
@@ -32,9 +32,18 @@ export class MatchesComponent implements OnInit {
       this.matchesService.writeMatchesLinks().subscribe({
         next: (matchesLink) => {
           console.log(matchesLink);
+          /*this.links = matchesLink.map(function (el){return el.link});
+          console.log("Test1");
+          console.log(this.links);
+          let array = matchesLink;
+          this.links = array.map(item => item.link);
+          console.log("Test2");
+          console.log(this.links);*/
+          this.links = matchesLink;
           this.matches = matchesLink.length;
         }, error: (e) => console.error(e)
       });
+
       this.resetButton();
     }
   }

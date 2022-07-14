@@ -21,12 +21,12 @@
   </div>
   <table border="2" *ngIf="matches">
     <thead>
-    <tr>
+    <tr align="center">
       <th>Ссылки</th>
     </tr>
     </thead>
     <tr *ngFor="let link of links">
-      <td>{{link}}</td>
+      <td><a href="{{link}}" target="_blank">{{link}}</a></td>
     </tr>
   </table>
 </div>
