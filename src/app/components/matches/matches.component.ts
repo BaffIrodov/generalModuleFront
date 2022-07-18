@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatchesService} from "../../services/matches.service";
+import {MatchesRequest} from "../../domain/matchesRequest";
 
 @Component({
   selector: 'app-matches',
@@ -22,24 +23,26 @@ export class MatchesComponent implements OnInit {
   solut = false;
   pressButton = -1;
   matches: Number;
-  links: String[];
+  //links: String[] = [];
+  //teams: Array<String[]> = [];
+  matchN: MatchesRequest[];
 
   solution(): void {
     if (this.solut == false) {
       this.pressButton = 0;
       this.matches = 0;
     } else {
+      //this.links = [];
+      this.matchN = [];
       this.matchesService.writeMatchesLinks().subscribe({
         next: (matchesLink) => {
           console.log(matchesLink);
-          /*this.links = matchesLink.map(function (el){return el.link});
-          console.log("Test1");
-          console.log(this.links);
-          let array = matchesLink;
-          this.links = array.map(item => item.link);
-          console.log("Test2");
-          console.log(this.links);*/
-          this.links = matchesLink;
+          matchesLink.forEach(el => {
+            //this.links.push(el.matchesUrl);
+            //this.teams.push([el.leftTeam, el.rightTeam]);
+            this.matchN.push(el);
+          })
+          //console.log(this.links);
           this.matches = matchesLink.length;
         }, error: (e) => console.error(e)
       });

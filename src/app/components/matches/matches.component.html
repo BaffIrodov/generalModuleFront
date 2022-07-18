@@ -19,14 +19,23 @@
     <div *ngIf="pressButton==0" class="form-text text-danger">Ничего не выйдет</div>
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
   </div>
-  <table border="2" *ngIf="matches">
+  <table border="3" style="border-collapse: separate" *ngIf="matches">
     <thead>
-    <tr align="center">
-      <th>Ссылки</th>
+    <tr align="center" style="background: darkgrey">
+      <th colspan="2">Ссылки</th>
     </tr>
     </thead>
-    <tr *ngFor="let link of links">
-      <td><a href="{{link}}" target="_blank">{{link}}</a></td>
+    <tbody *ngFor="let match of matchN">
+    <tr style="border: 0; border-collapse: unset">
+      <td colspan="2"><p></td>
     </tr>
+    <tr>
+      <td colspan="2"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
+    </tr>
+    <tr>
+      <td align="center">{{match.leftTeam}}</td>
+      <td align="center">{{match.rightTeam}}</td>
+    </tr>
+    </tbody>
   </table>
 </div>
