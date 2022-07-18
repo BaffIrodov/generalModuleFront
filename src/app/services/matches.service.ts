@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {MatchesRequest} from "../domain/matchesRequest";
 
 const url = 'http://localhost:8080/matches/';
 
@@ -12,10 +13,11 @@ export class MatchesService {
 
   constructor(private http: HttpClient) { }
 
-  writeMatchesLinks(): Observable<Array<String>>{
+  /*writeMatchesLinks(): Observable<Array<String>>{
     return this.http.post<Array<String>>(url + 'write-links', Array<String>);
-  }
-  /*writeMatchesLinks(): Observable<Array<{id: number, link: String}>>{
-    return this.http.post<Array<{id: number, link: String}>>(url + 'write-links', Array<{id: number, link: String}>);
   }*/
+
+  writeMatchesLinks(): Observable<MatchesRequest[]>{
+    return this.http.post<MatchesRequest[]>(url + 'write-links', null);
+  }
 }
