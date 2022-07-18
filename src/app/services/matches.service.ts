@@ -13,10 +13,6 @@ export class MatchesService {
 
   constructor(private http: HttpClient) { }
 
-  /*writeMatchesLinks(): Observable<Array<String>>{
-    return this.http.post<Array<String>>(url + 'write-links', Array<String>);
-  }*/
-
   writeMatchesLinks(): Observable<MatchesRequest[]>{
     return this.http.post<MatchesRequest[]>(url + 'write-links', null);
   }
