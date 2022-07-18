@@ -20,48 +20,32 @@ export class MatchesComponent implements OnInit {
     return defaultText;
   }
 
-  solut = false;
-  pressButton = -1;
+  pressButton = 0;
   matches: Number;
-  //links: String[] = [];
-  //teams: Array<String[]> = [];
-  matchN: MatchesRequest[];
+  matchesArr: MatchesRequest[];
 
-  solution(): void {
-    if (this.solut == false) {
-      this.pressButton = 0;
-      this.matches = 0;
-    } else {
-      //this.links = [];
-      this.matchN = [];
-      this.matchesService.writeMatchesLinks().subscribe({
-        next: (matchesLink) => {
-          console.log(matchesLink);
-          matchesLink.forEach(el => {
-            //this.links.push(el.matchesUrl);
-            //this.teams.push([el.leftTeam, el.rightTeam]);
-            this.matchN.push(el);
-          })
-          //console.log(this.links);
-          this.matches = matchesLink.length;
-        }, error: (e) => console.error(e)
-      });
-
-      this.resetButton();
-    }
+  getMatches(): void {
+    this.clearMatches();
+    this.matchesService.writeMatchesLinks().subscribe({
+      next: (matchesLink) => {
+        console.log(matchesLink);
+        matchesLink.forEach(element => {
+          this.matchesArr.push(element);
+        })
+        this.matches = matchesLink.length;
+      }, error: (e) => console.error(e)
+    });
+    this.resetButton();
   }
 
-  answer(ans: number): void {
-    if (ans == 1) {
-      this.solut = true;
-    } else {
-      this.solut = false;
-    }
+  clearMatches(): void{
+    this.matchesArr = [];
+    this.matches = 0;
   }
 
   async resetButton() {
     this.pressButton = 1;
     new Promise(f => setTimeout(f, 2000))
-      .finally(() => this.pressButton = -1);
+      .finally(() => this.pressButton = 0);
   }
 }

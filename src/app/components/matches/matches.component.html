@@ -4,28 +4,22 @@
   <div class="submit-form">
     <form>
       <div class="form-group">
-        <p>Хотите распарсить matches?</p>
-        <input type="radio" id="radio1" name="radioButton" value="yesRadio" (click)="answer(1)">
-        <label for="radio1"><b>Да</b></label>
-        <br>
-        <input type="radio" id="radio2" name="radioButton" value="noRadio" checked (click)="answer(0)">
-        <label for="radio2"><b>Нет</b></label>
+        <button (click)="getMatches()" class="btn btn-success" [disabled]="pressButton==1"> {{getButtonText()}} </button>
       </div>
-      <div class="form-group">
-        <button (click)="solution()" class="btn btn-success" [disabled]="pressButton==1"> {{getButtonText()}} </button>
+      <div>
+        <button (click)="clearMatches()" [disabled]="!matches" style="background: brown; border-radius: 5px">Очистить матчи</button>
       </div>
     </form>
     <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
-    <div *ngIf="pressButton==0" class="form-text text-danger">Ничего не выйдет</div>
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
   </div>
   <table border="3" style="border-collapse: separate" *ngIf="matches">
     <thead>
     <tr align="center" style="background: darkgrey">
-      <th colspan="2">Ссылки</th>
+      <th colspan="2">Действующие матчи</th>
     </tr>
     </thead>
-    <tbody *ngFor="let match of matchN">
+    <tbody *ngFor="let match of matchesArr">
     <tr style="border: 0; border-collapse: unset">
       <td colspan="2"><p></td>
     </tr>
