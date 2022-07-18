@@ -11,9 +11,24 @@ export class StatsComponent implements OnInit {
   constructor(private statsService: StatsService) { }
 
   writeButtonIsAvailable = false;
+  availableCount: Number;
 
-  ngOnInit(): void {
-    console.log("statsWorks!");
+  cols: any[];
+
+  async ngOnInit() {
+    await this.getAvailableCount();
+    this.columnsConstruct();
+  }
+
+  async getAvailableCount() {
+    this.statsService.getAvailableCountForParsing()
+      .subscribe({
+        next: (res) => {
+          this.availableCount = res;
+          this.availableCount == 0 ? this.writeButtonIsAvailable = false : null;
+        },
+        error: (e) => console.error(e)
+      });
   }
 
   writePlayers(): void {
@@ -32,6 +47,15 @@ export class StatsComponent implements OnInit {
     this.writeButtonIsAvailable = true;
     new Promise(f => setTimeout(f, 10000))
       .finally(() => this.writeButtonIsAvailable = false);
+  }
+
+  columnsConstruct() {
+    this.cols = [
+      { field: 'vin', header: 'Vin' },
+      { field: 'year', header: 'Year' },
+      { field: 'brand', header: 'Brand' },
+      { field: 'color', header: 'Color' }
+    ];
   }
 
 }

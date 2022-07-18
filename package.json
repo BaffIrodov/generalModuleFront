@@ -1,5 +1,5 @@
 {
-  "name": "angular-14-crud-example",
+  "name": "general-module",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,8 +20,8 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "bootstrap": "^4.6.1",
-    "primeicons": "^2.0.0",
-    "primeng": "^8.1.1",
+    "primeicons": "^5.0.0",
+    "primeng": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

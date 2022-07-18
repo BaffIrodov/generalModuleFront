@@ -11,6 +11,10 @@ export class StatsService {
 
   constructor(private http: HttpClient) { }
 
+  getAvailableCountForParsing(): Observable<Number> {
+    return this.http.get<Number>(url + 'available-count');
+  }
+
   writeStatsPlayers(): Observable<Number> {
     return this.http.get<Number>(url + 'write-players');
   }
