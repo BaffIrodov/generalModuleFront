@@ -4,10 +4,13 @@
   <div class="submit-form">
     <form>
       <div class="form-group">
-        <button (click)="getMatches()" class="btn btn-success" [disabled]="pressButton==1"> {{getButtonText()}} </button>
+        <button (click)="getMatches()" class="btn btn-success"
+                [disabled]="pressButton==1"> {{getButtonText()}} </button>
       </div>
       <div>
-        <button (click)="clearMatches()" [disabled]="!matches" style="background: brown; border-radius: 5px">Очистить матчи</button>
+        <button (click)="clearMatches()" [disabled]="!matches" style="background: brown; border-radius: 5px">Очистить
+          матчи
+        </button>
       </div>
     </form>
     <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
@@ -16,20 +19,68 @@
   <table border="3" style="border-collapse: separate" *ngIf="matches">
     <thead>
     <tr align="center" style="background: darkgrey">
-      <th colspan="2">Действующие матчи</th>
+      <th colspan="3">Действующие матчи</th>
     </tr>
     </thead>
     <tbody *ngFor="let match of matchesArr">
     <tr style="border: 0; border-collapse: unset">
-      <td colspan="2"><p></td>
+      <td colspan="3"><p></td>
     </tr>
     <tr>
-      <td colspan="2"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
+      <td colspan="3"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
+    </tr>
+    <tr style="text-align: center">
+      <td width="45%">{{match.leftTeam}}</td>
+      <td width="10%"><b>{{match.matchFormat}}</b></td>
+      <td width="45%">{{match.rightTeam}}</td>
     </tr>
     <tr>
-      <td align="center">{{match.leftTeam}}</td>
-      <td align="center">{{match.rightTeam}}</td>
+      <td align="right"><b>{{match.leftTeamOdds}}</b></td>
+      <td align="center">
+        <select>
+          <option selected>Карты</option>
+          <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
+        </select>
+      </td>
+      <td><b>{{match.rightTeamOdds}}</b></td>
     </tr>
     </tbody>
   </table>
+
+  <label><br>Здесь будет табличка с primeng<br></label>
+
+  <p-table  *ngIf="matches">
+    <ng-template pTemplate="header">
+      <thead>
+      <tr>
+        <th colspan="3">Действующие матчи</th>
+      </tr>
+      </thead>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <tbody *ngFor="let match of matchesArr">
+      <tr>
+        <td colspan="3"><p></td>
+      </tr>
+      <tr>
+        <td colspan="3"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
+      </tr>
+      <tr>
+        <td>{{match.leftTeam}}</td>
+        <td><b>{{match.matchFormat}}</b></td>
+        <td>{{match.rightTeam}}</td>
+      </tr>
+      <tr>
+        <td><b>{{match.leftTeamOdds}}</b></td>
+        <td>
+          <select>
+            <option selected>Карты</option>
+            <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
+          </select>
+        </td>
+        <td><b>{{match.rightTeamOdds}}</b></td>
+      </tr>
+      </tbody>
+    </ng-template>
+  </p-table>
 </div>
