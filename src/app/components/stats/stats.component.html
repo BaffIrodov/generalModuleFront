@@ -6,19 +6,32 @@
     </label>
 
     <label>
-      {{"Количество доступных игр для парсинга: " + this.availableCount}}
+      {{"Количество доступных игр для парсинга: " + (this.availableCount? this.availableCount: '0')}}
     </label>
+
+    <div>
+      <label>Размер пачки парсинга: </label>
+      <input
+        class="form-control"
+        id="batch"
+        style="max-width: 200px"
+        title="Размер пачки"
+        required
+        [(ngModel)]="statsRequest.batchSize"
+        name="description"
+      />
+    </div>
 
     <button
       pButton type="button"
       class="p-button-raised p-button-rounded"
       (click)="writePlayers()"
-      [disabled]="writeButtonIsAvailable"
+      [disabled]="!requestValidate() || writeButtonIsAvailable"
       label="Запарсить всё доступное"
     ></button>
 
   </p-toolbar>
-  <p-table>
+  <p-table [value]="results">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of cols">

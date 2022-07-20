@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StatsService} from "../../services/stats.service";
+import {StatsRequest} from "../../domain/statsRequest";
+import {StatsResponse} from "../../domain/statsResponse";
 
 @Component({
   selector: 'app-stats',
@@ -12,6 +14,10 @@ export class StatsComponent implements OnInit {
 
   writeButtonIsAvailable = false;
   availableCount: Number;
+
+  statsRequest = new StatsRequest();
+
+  results: StatsResponse[] = [];
 
   cols: any[];
 
@@ -32,11 +38,14 @@ export class StatsComponent implements OnInit {
   }
 
   writePlayers(): void {
-    this.statsService.writeStatsPlayers()
+    this.statsService.writeStatsPlayers(this.statsRequest)
       .subscribe({
         next: (res) => {
-          console.log("Должен возвращаться номер");
-          console.log(res);
+          this.results.push(res);
+          this.getAvailableCount();
+          if(this.availableCount != 0) {
+            this.writePlayers();
+          }
         },
         error: (e) => console.error(e)
       });
@@ -49,12 +58,15 @@ export class StatsComponent implements OnInit {
       .finally(() => this.writeButtonIsAvailable = false);
   }
 
+  requestValidate() {
+    return (!!this.statsRequest.batchSize);
+  }
+
   columnsConstruct() {
     this.cols = [
-      { field: 'vin', header: 'Vin' },
-      { field: 'year', header: 'Year' },
-      { field: 'brand', header: 'Brand' },
-      { field: 'color', header: 'Color' }
+      { field: 'batchSize', header: 'Размер пачки' },
+      { field: 'batchTime', header: 'Время обработки' },
+      { field: 'requestDate', header: 'Дата обработки' }
     ];
   }
 

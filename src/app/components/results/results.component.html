@@ -1,19 +1,26 @@
 <div>
-  <div class="submit-form">
-    <div class="form-group">
-      <label for="description">Количество страниц, которые надо распарсить</label>
+  <p-toolbar>
+    <div>
+      <label>Количество страниц, которые надо распарсить: </label>
       <input
         class="form-control"
-        id="description"
-        title="Количество страниц, которые надо распарсить"
+        id="number"
+        style="max-width: 200px"
+        title="Количество страниц"
         required
         [(ngModel)]="resultsRequest.pageNumber"
         name="description"
       />
     </div>
-    <div class="form-group">
-      <button (click)="writeLinks()" class="btn btn-success" [disabled]="!requestValidate() || writeButtonIsAvailable">{{getButtonText()}}</button>
-    </div>
+
+    <button
+      pButton type="button"
+      class="p-button-raised p-button-rounded"
+      (click)="writeLinks()"
+      [disabled]="!requestValidate() || writeButtonIsAvailable"
+      label="Запарсить"
+    ></button>
+
     <div *ngIf="writeButtonIsAvailable" class="form-text text-danger">Парсинг начался</div>
-  </div>
+  </p-toolbar>
 </div>
