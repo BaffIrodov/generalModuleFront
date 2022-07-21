@@ -23,9 +23,11 @@ export class MatchesComponent implements OnInit {
   pressButton = 0;
   matches: Number;
   matchesArr: MatchesRequest[];
+  time: number = 0;
 
   getMatches(): void {
     this.clearMatches();
+    let t0 = performance.now();
     this.matchesService.writeMatchesLinks().subscribe({
       next: (matchesLink) => {
         console.log(matchesLink);
@@ -35,6 +37,8 @@ export class MatchesComponent implements OnInit {
         this.matches = matchesLink.length;
       }, error: (e) => console.error(e)
     });
+    let t1 = performance.now();
+    console.log("Время парсинга: " + (t1-t0));
     this.resetButton();
   }
 
