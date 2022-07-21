@@ -23,6 +23,7 @@ export class StatsComponent implements OnInit {
   cols: any[];
 
   async ngOnInit() {
+    await this.getResponseAnalytics(); //спрашиваем только один раз - всё, что будет добито во время работы пользователя докинется на фронте
     await this.getAvailableCount();
     this.columnsConstruct();
   }
@@ -33,6 +34,18 @@ export class StatsComponent implements OnInit {
         next: (res) => {
           this.availableCount = res;
           this.availableCount == 0 ? this.writeButtonIsAvailable = false : null;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async getResponseAnalytics() {
+    this.statsService.getResponseAnalytics()
+      .subscribe({
+        next: (res) => {
+          if(!!res) {
+            this.results = res;
+          }
         },
         error: (e) => console.error(e)
       });

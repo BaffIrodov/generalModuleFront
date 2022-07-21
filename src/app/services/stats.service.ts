@@ -17,6 +17,10 @@ export class StatsService {
     return this.http.get<Number>(url + 'available-count');
   }
 
+  getResponseAnalytics(): Observable<StatsResponse[]> {
+    return this.http.get<StatsResponse[]>(url + 'response-analytics');
+  }
+
   writeStatsPlayers(request: StatsRequest): Observable<StatsResponse> {
     return this.http.post<StatsResponse>(url + 'write-players', request);
   }
