@@ -6,8 +6,15 @@
     </label>
 
     <label>
-      {{"Количество доступных игр для парсинга: " + (this.availableCount? this.availableCount: '0')}}
+      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0')}}
     </label>
+
+    <button
+      pButton type="button"
+      class="p-button-raised p-button-rounded"
+      (click)="getAvailableCount()"
+      label="Обновить"
+    ></button>
 
     <div>
       <label>Размер пачки парсинга: </label>
@@ -22,13 +29,23 @@
       />
     </div>
 
-    <button
-      pButton type="button"
-      class="p-button-raised p-button-rounded"
-      (click)="writePlayers()"
-      [disabled]="!requestValidate() || writeButtonIsAvailable"
-      label="Запарсить всё доступное"
-    ></button>
+  </p-toolbar>
+  <button
+    pButton type="button"
+    class="p-button-raised p-button-rounded"
+    (click)="writePlayers(); workflowIsRun = true"
+    [disabled]="!requestValidate() || writeButtonIsAvailable"
+    label="Запарсить всё доступное"
+  ></button>
+
+  <button
+    pButton type="button"
+    class="p-button-raised p-button-rounded"
+    (click)="stopWorkflow()"
+    [disabled]="workflowIsRun == false"
+    label="Остановить парсинг"
+  ></button>
+  <p-toolbar>
 
   </p-toolbar>
   <p-table [value]="results">

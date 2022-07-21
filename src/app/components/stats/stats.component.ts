@@ -13,6 +13,7 @@ export class StatsComponent implements OnInit {
   constructor(private statsService: StatsService) { }
 
   writeButtonIsAvailable = false;
+  workflowIsRun = true; //если фолс - то остановим цикл запросов
   availableCount: Number;
 
   statsRequest = new StatsRequest();
@@ -43,7 +44,7 @@ export class StatsComponent implements OnInit {
         next: (res) => {
           this.results.push(res);
           this.getAvailableCount();
-          if(this.availableCount != 0) {
+          if(this.availableCount != 0 && this.workflowIsRun == true) {
             this.writePlayers();
           }
         },
@@ -60,6 +61,10 @@ export class StatsComponent implements OnInit {
 
   requestValidate() {
     return (!!this.statsRequest.batchSize);
+  }
+
+  stopWorkflow() {
+    this.workflowIsRun = false;
   }
 
   columnsConstruct() {
