@@ -15,6 +15,7 @@
     </form>
     <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
+    <div *ngIf="matches"> Полное время парсинга: {{fullTime}}</div>
   </div>
   <table border="3" style="border-collapse: separate" *ngIf="matches">
     <thead>
