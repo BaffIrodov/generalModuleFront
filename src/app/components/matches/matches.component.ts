@@ -23,7 +23,7 @@ export class MatchesComponent implements OnInit {
   pressButton = 0;
   matches: Number;
   matchesArr: MatchesRequest[];
-  fullTime: bigint;
+  fullTime: number;
 
   getMatches(): void {
     this.clearMatches();

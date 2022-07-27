@@ -7,5 +7,5 @@ export class MatchesRequest {
   matchMapsNames: String[];
   leftTeamOdds: String;
   rightTeamOdds: String;
-  matchTime: bigint;
+  matchTime: number;
 }
