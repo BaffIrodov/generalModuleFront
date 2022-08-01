@@ -21,7 +21,7 @@ export class MatchesComponent implements OnInit {
   }
 
   pressButton = 0;
-  matches: Number;
+  matches: number;
   matchesArr: MatchesRequest[];
   fullTime: number;
 
@@ -40,14 +40,21 @@ export class MatchesComponent implements OnInit {
     this.resetButton();
   }
 
-  clearMatches(): void{
+  clearMatches(): void {
     this.matchesArr = [];
     this.matches = 0;
   }
 
   async resetButton() {
-    this.pressButton = 1;
+    /*this.pressButton = 1;
     new Promise(f => setTimeout(f, 2000))
-      .finally(() => this.pressButton = 0);
+      .finally(() => this.pressButton = 0);*/
+    this.pressButton = 1;
+    let interval = setInterval(() => {
+      if (this.matches) {
+        clearInterval(interval);
+        this.pressButton = 0;
+      }
+    }, 1000);
   }
 }
