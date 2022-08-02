@@ -68,8 +68,12 @@ export class StatsComponent implements OnInit {
 
   async disableWriteButton() {
     this.writeButtonIsAvailable = true;
-    new Promise(f => setTimeout(f, 10000))
-      .finally(() => this.writeButtonIsAvailable = false);
+    let interval = setInterval(() => {
+      if (!this.workflowIsRun) {
+        this.writeButtonIsAvailable = false;
+        clearInterval(interval);
+      }
+    }, 500);
   }
 
   requestValidate() {

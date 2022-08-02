@@ -13,14 +13,17 @@
       />
     </div>
 
-    <button
-      pButton type="button"
-      class="p-button-raised p-button-rounded"
-      (click)="writeLinks()"
-      [disabled]="!requestValidate() || writeButtonIsAvailable"
-      label="Запарсить"
-    ></button>
-
-    <div *ngIf="writeButtonIsAvailable" class="form-text text-danger">Парсинг начался</div>
+    <div>
+      <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт
+        парсинг</label>
+      &nbsp;
+      <button
+        pButton type="button"
+        class="p-button-raised p-button-rounded"
+        (click)="writeLinks()"
+        [disabled]="!requestValidate() || writeButtonIsAvailable"
+        label="Запарсить"
+      ></button>
+    </div>
   </p-toolbar>
 </div>

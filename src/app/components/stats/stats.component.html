@@ -42,9 +42,11 @@
     pButton type="button"
     class="p-button-raised p-button-rounded"
     (click)="stopWorkflow()"
-    [disabled]="workflowIsRun == false"
+    [disabled]="workflowIsRun == false || !statsRequest.batchSize"
     label="Остановить парсинг"
   ></button>
+  &nbsp;
+  <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт парсинг</label>
   <p-toolbar>
 
   </p-toolbar>

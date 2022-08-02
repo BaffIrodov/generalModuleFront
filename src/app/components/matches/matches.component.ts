@@ -20,7 +20,7 @@ export class MatchesComponent implements OnInit {
     return defaultText;
   }
 
-  pressButton = 0;
+  writeButtonIsAvailable = false;
   matches: number;
   matchesArr: MatchesRequest[];
   fullTime: number;
@@ -29,7 +29,7 @@ export class MatchesComponent implements OnInit {
     this.clearMatches();
     this.matchesService.writeMatchesLinks().subscribe({
       next: (matchesLink) => {
-        console.log(matchesLink);
+        //console.log(matchesLink);
         matchesLink.matches.forEach(element => {
           this.matchesArr.push(element);
         })
@@ -46,14 +46,11 @@ export class MatchesComponent implements OnInit {
   }
 
   async resetButton() {
-    /*this.pressButton = 1;
-    new Promise(f => setTimeout(f, 2000))
-      .finally(() => this.pressButton = 0);*/
-    this.pressButton = 1;
+    this.writeButtonIsAvailable = true;
     let interval = setInterval(() => {
       if (this.matches) {
+        this.writeButtonIsAvailable = false;
         clearInterval(interval);
-        this.pressButton = 0;
       }
     }, 1000);
   }

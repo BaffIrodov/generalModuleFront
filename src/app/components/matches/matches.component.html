@@ -5,7 +5,10 @@
     <form>
       <div class="form-group">
         <button (click)="getMatches()" class="btn btn-success"
-                [disabled]="pressButton==1"> {{getButtonText()}} </button>
+                [disabled]="writeButtonIsAvailable"> {{getButtonText()}} </button>
+        &nbsp;
+        <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт
+          парсинг</label>
       </div>
       <div>
         <button (click)="clearMatches()" [disabled]="!matches" style="background: brown; border-radius: 5px">Очистить
@@ -13,7 +16,6 @@
         </button>
       </div>
     </form>
-    <div *ngIf="pressButton==1" class="form-text text-danger">Пошла работа</div>
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
     <div *ngIf="matches"> Полное время парсинга: {{fullTime}}</div>
   </div>

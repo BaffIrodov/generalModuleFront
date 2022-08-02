@@ -13,6 +13,7 @@ export class ResultsComponent implements OnInit {
 
   resultsRequest = new ResultsRequest();
   writeButtonIsAvailable = false;
+  parseDone: boolean;
 
   ngOnInit(): void {
   }
@@ -34,10 +35,12 @@ export class ResultsComponent implements OnInit {
   }
 
   writeLinks(): void {
+    this.parseDone = false;
     this.resultsService.writeResultsLinks(Number.parseInt(this.resultsRequest.pageNumber.toString()))
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.parseDone = true;
         },
         error: (e) => console.error(e)
       });
@@ -46,8 +49,12 @@ export class ResultsComponent implements OnInit {
 
   async disableWriteButton() {
     this.writeButtonIsAvailable = true;
-    new Promise(f => setTimeout(f, 10000))
-      .finally(() => this.writeButtonIsAvailable = false);
+    let interval = setInterval(() => {
+      if (this.parseDone) {
+        this.writeButtonIsAvailable = false;
+        clearInterval(interval);
+      }
+    }, 200);
   }
 
 }
