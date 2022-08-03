@@ -56,6 +56,7 @@ import { ResultComponent } from './components/result/result.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { DebugComponent } from './components/debug/debug.component';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DebugComponent } from './components/debug/debug.component';
     ResultComponent,
     StatsComponent,
     MatchesComponent,
-    DebugComponent
+    DebugComponent,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,
