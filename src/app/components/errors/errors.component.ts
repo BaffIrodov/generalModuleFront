@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Errors} from "../../domain/errors";
+import {ErrorsService} from "../../services/errors.service";
 
 @Component({
   selector: 'app-errors',
@@ -8,7 +9,8 @@ import {Errors} from "../../domain/errors";
 })
 export class ErrorsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private errorsServise: ErrorsService) {
+  }
 
   results: Errors[] = [];
 
@@ -18,13 +20,26 @@ export class ErrorsComponent implements OnInit {
     this.columnsConstruct();
   }
 
+  getAllErrors(): void {
+    this.errorsServise.getAllErrors().subscribe({
+      next: (error) => {
+        this.results = error;
+      }, error: (e) => console.error(e)
+    });
+    console.log(this.results);
+  }
+
+  clearErrors(): void {
+    this.results = [];
+  }
+
   columnsConstruct() {
     this.cols = [
-      { field: 'classAndLine', header: 'Класс и строка' },
-      { field: 'descriptionError', header: 'Описание ошибки' },
-      { field: 'verificationError', header: 'Обработано' },
-      { field: 'payload', header: 'Информация' },
-      { field: 'dateTime', header: 'Дата ошибки' },
+      {field: 'classAndLine', header: 'Класс и строка'},
+      {field: 'descriptionError', header: 'Описание ошибки'},
+      {field: 'verificationError', header: 'Обработано'},
+      {field: 'payload', header: 'Информация'},
+      {field: 'dateTime', header: 'Дата ошибки'},
     ];
   }
 }

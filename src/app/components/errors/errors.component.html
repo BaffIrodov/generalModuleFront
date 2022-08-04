@@ -3,6 +3,22 @@
     <label>
       Страница ошибок
     </label>
+
+    <div>
+      <button
+        pButton type="button"
+        class="p-button-raised p-button-rounded"
+        (click)="getAllErrors()"
+        label="Забрать ошибки"
+      ></button>
+
+      <button
+        pButton type="button"
+        class="p-button-raised p-button-rounded"
+        (click)="clearErrors()"
+        label="Обновить"
+      ></button>
+    </div>
   </p-toolbar>
   <p-table [value]="results">
     <ng-template pTemplate="header">
