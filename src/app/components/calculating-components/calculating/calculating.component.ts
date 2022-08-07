@@ -10,6 +10,7 @@ import {MapsCalculatingQueueResponse} from "../../../domain/calculating-domain/M
 export class CalculatingComponent implements OnInit {
 
   actualResponse: MapsCalculatingQueueResponse = new MapsCalculatingQueueResponse();
+  loading = false;
 
   constructor(private calculatingService: CalculatingService) { }
 
@@ -27,11 +28,13 @@ export class CalculatingComponent implements OnInit {
   }
 
   async createQueue() {
+    this.loading = true;
     this.calculatingService.createQueue()
       .subscribe({
         next: (res) => {
           this.actualResponse = res;
           this.getCurrentQueueSize();
+          this.loading = false;
         },
         error: (e) => console.error(e)
       });
