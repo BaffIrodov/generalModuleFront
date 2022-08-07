@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Errors} from "../domain/errors";
+import {Errors} from "../../domain/common-domain/errors";
 
 const url = 'http://localhost:8080/errors/';
 

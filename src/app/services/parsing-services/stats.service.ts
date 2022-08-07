@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {StatsResponse} from "../domain/statsResponse";
-import {StatsRequest} from "../domain/statsRequest";
+import {StatsResponse} from "../../domain/parsing-domain/statsResponse";
+import {StatsRequest} from "../../domain/parsing-domain/statsRequest";
 
 const url = 'http://localhost:8080/stats/';
 

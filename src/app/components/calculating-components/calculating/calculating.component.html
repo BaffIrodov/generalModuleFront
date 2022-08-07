@@ -1,0 +1,22 @@
+<div>
+  <button
+    pButton type="button"
+    class="p-button-raised"
+    (click)="getCurrentQueueSize()"
+    label="Получить текущий размер очереди"
+  ></button>
+  <label>
+    {{"Количество необработанных матчей в очереди " +
+  (this.actualResponse.currentNotProcessedMaps ?
+    this.actualResponse.currentNotProcessedMaps :
+    '0')
+    }}
+  </label>
+  <button
+    pButton type="button"
+    style="margin-left: 5px"
+    class="p-button-danger"
+    (click)="createQueue()"
+    label="Создать очередь"
+  ></button>
+</div>

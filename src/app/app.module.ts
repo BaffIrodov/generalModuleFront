@@ -51,12 +51,13 @@ import {TreeTableModule} from 'primeng/treetable';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ResultsComponent } from './components/results/results.component';
-import { ResultComponent } from './components/result/result.component';
-import { StatsComponent } from './components/stats/stats.component';
-import { MatchesComponent } from './components/matches/matches.component';
-import { DebugComponent } from './components/debug/debug.component';
-import { ErrorsComponent } from './components/errors/errors.component';
+import { ResultsComponent } from './components/parsing-components/results/results.component';
+import { ResultComponent } from './components/parsing-components/result/result.component';
+import { StatsComponent } from './components/parsing-components/stats/stats.component';
+import { MatchesComponent } from './components/parsing-components/matches/matches.component';
+import { DebugComponent } from './components/common-components/debug/debug.component';
+import { ErrorsComponent } from './components/common-components/errors/errors.component';
+import { CalculatingComponent } from './components/calculating-components/calculating/calculating.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ErrorsComponent } from './components/errors/errors.component';
     StatsComponent,
     MatchesComponent,
     DebugComponent,
-    ErrorsComponent
+    ErrorsComponent,
+    CalculatingComponent
   ],
   imports: [
     BrowserModule,

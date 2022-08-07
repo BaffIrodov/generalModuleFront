@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MatchesService} from "../../services/matches.service";
-import {MatchesRequest} from "../../domain/matchesRequest";
+import {MatchesService} from "../../../services/parsing-services/matches.service";
+import {MatchesRequest} from "../../../domain/parsing-domain/matchesRequest";
 
 @Component({
   selector: 'app-matches',

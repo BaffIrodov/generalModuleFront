@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Errors} from "../../domain/errors";
-import {ErrorsService} from "../../services/errors.service";
+import {Errors} from "../../../domain/common-domain/errors";
+import {ErrorsService} from "../../../services/common-services/errors.service";
 
 @Component({
   selector: 'app-errors',

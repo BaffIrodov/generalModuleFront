@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ResultsService} from "../../services/results.service";
-import {ResultsRequest} from "../../domain/resultsRequest";
+import {ResultsService} from "../../../services/parsing-services/results.service";
+import {ResultsRequest} from "../../../domain/parsing-domain/resultsRequest";
 
 @Component({
   selector: 'app-results',

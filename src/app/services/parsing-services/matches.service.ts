@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {MatchesRequest} from "../domain/matchesRequest";
-import {MatchesFullRequest} from "../domain/matchesFullRequest";
+import {MatchesRequest} from "../../domain/parsing-domain/matchesRequest";
+import {MatchesFullRequest} from "../../domain/parsing-domain/matchesFullRequest";
 
 const url = 'http://localhost:8080/matches/';
 

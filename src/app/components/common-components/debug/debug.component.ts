@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ResultsService} from "../../services/results.service";
-import {DebugService} from "../../services/debug.service";
+import {ResultsService} from "../../../services/parsing-services/results.service";
+import {DebugService} from "../../../services/common-services/debug.service";
 
 @Component({
   selector: 'app-debug',
