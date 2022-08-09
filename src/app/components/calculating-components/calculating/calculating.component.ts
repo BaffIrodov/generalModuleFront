@@ -40,4 +40,15 @@ export class CalculatingComponent implements OnInit {
       });
   }
 
+  async debug() {
+    this.loading = true;
+    this.calculatingService.debug()
+      .subscribe({
+        next: (res) => {
+          //this.actualResponse = res;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
 }

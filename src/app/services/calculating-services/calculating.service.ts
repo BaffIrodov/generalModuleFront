@@ -19,4 +19,8 @@ export class CalculatingService {
   createQueue(): Observable<MapsCalculatingQueueResponse> {
     return this.http.get<MapsCalculatingQueueResponse>(url + 'create-queue');
   }
+
+  debug(): Observable<void> {
+    return this.http.get<void>(url + 'debug');
+  }
 }
