@@ -24,4 +24,14 @@ export class DebugComponent implements OnInit {
       });
   }
 
+  getFilesWithDistribution(): void {
+    this.debugService.filesWithDistribution()
+      .subscribe({
+        next: (res) => {
+          console.log("Записаны данные распределений. Path генерируется на бэке");
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
 }

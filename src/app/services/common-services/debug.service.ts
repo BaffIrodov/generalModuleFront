@@ -14,4 +14,8 @@ export class DebugService {
   resultsLinkSetProcessed(value: boolean): Observable<Number> {
     return this.http.get<Number>(url + `results-link-processed/${value}`);
   }
+
+  filesWithDistribution() {
+    return this.http.get<void>(`http://localhost:8081/debug/files-distribution`);
+  }
 }
