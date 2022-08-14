@@ -15,6 +15,7 @@ export class CalculatingComponent implements OnInit {
   constructor(private calculatingService: CalculatingService) { }
 
   ngOnInit(): void {
+    this.getCurrentQueueSize();
   }
 
   async getCurrentQueueSize() {
