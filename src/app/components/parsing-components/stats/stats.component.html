@@ -47,7 +47,7 @@
   ></button>
   &nbsp;
   <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт парсинг</label>
-  <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows" (onRowSelect)="recalcutaleSummaryRow()">
+  <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows"(selectionChange)="recalcutaleSummaryRow()">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns">
