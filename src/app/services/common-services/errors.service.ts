@@ -15,4 +15,16 @@ export class ErrorsService {
   getAllErrors(): Observable<Errors[]>{
     return this.http.get<Errors[]>(url + 'search-all');
   }
+
+  getArchiveErrors(): Observable<Errors[]>{
+    return this.http.get<Errors[]>(url + 'search-archive');
+  }
+
+  getNotArchiveErrors(): Observable<Errors[]>{
+    return this.http.get<Errors[]>(url + 'search-not-verified');
+  }
+
+  setSelectedRowsProcessed(errors: Errors[]): Observable<void>{
+    return this.http.post<void>(url + 'set-processed', errors);
+  }
 }

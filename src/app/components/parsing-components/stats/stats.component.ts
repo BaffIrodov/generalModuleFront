@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {StatsService} from "../../../services/parsing-services/stats.service";
 import {StatsRequest} from "../../../domain/parsing-domain/statsRequest";
 import {StatsResponse} from "../../../domain/parsing-domain/statsResponse";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-stats',
@@ -19,6 +20,10 @@ export class StatsComponent implements OnInit {
   statsRequest = new StatsRequest();
 
   results: StatsResponse[] = [];
+  selectedRows: StatsResponse[] = [];
+
+  summaryRow: StatsResponse = new StatsResponse();
+  summaryRowDivide = 0;
 
   cols: any[];
 
@@ -26,6 +31,16 @@ export class StatsComponent implements OnInit {
     await this.getResponseAnalytics(); //спрашиваем только один раз - всё, что будет добито во время работы пользователя докинется на фронте
     await this.getAvailableCount();
     this.columnsConstruct();
+  }
+
+  recalcutaleSummaryRow() {
+    this.summaryRow.batchSize = 0;
+    this.summaryRow.batchTime = 0;
+    this.selectedRows.forEach(s => {
+      this.summaryRow.batchSize += s.batchSize;
+      this.summaryRow.batchTime += s.batchTime;
+    })
+    this.summaryRowDivide = this.summaryRow.batchTime / this.summaryRow.batchSize / 1000;
   }
 
   async getAvailableCount() {

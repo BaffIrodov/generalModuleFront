@@ -13,11 +13,35 @@ export class ErrorsComponent implements OnInit {
   }
 
   results: Errors[] = [];
+  selectedRows: Errors[] = [];
+
+  showArchive = false;
 
   cols: any[];
 
   ngOnInit(): void {
     this.columnsConstruct();
+    this.search();
+  }
+
+  search() {
+    this.showArchive? this.getArchiveErrors(): this.getNotArchiveErrors();
+  }
+
+  getArchiveErrors(): void {
+    this.errorsServise.getArchiveErrors().subscribe({
+      next: (error) => {
+        this.results = error;
+      }, error: (e) => console.error(e)
+    });
+  }
+
+  getNotArchiveErrors(): void {
+    this.errorsServise.getNotArchiveErrors().subscribe({
+      next: (error) => {
+        this.results = error;
+      }, error: (e) => console.error(e)
+    });
   }
 
   getAllErrors(): void {
@@ -26,11 +50,16 @@ export class ErrorsComponent implements OnInit {
         this.results = error;
       }, error: (e) => console.error(e)
     });
-    console.log(this.results);
   }
 
-  clearErrors(): void {
-    this.results = [];
+  setErrorProcessed() {
+    this.errorsServise.setSelectedRowsProcessed(this.selectedRows).subscribe({
+      next: () => {
+        console.log("Позиции переведены в архив");
+        this.selectedRows = [];
+        this.search();
+      }, error: (e) => console.error(e)
+    });
   }
 
   columnsConstruct() {

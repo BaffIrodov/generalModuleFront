@@ -4,23 +4,28 @@
       Страница ошибок
     </label>
 
+    <p-checkbox label="Показывать архив " [binary]="true" (onChange)="this.showArchive = !this.showArchive; this.search()">
+    </p-checkbox>
+
     <div>
       <button
         pButton type="button"
         class="p-button-raised p-button-rounded"
-        (click)="getAllErrors()"
-        label="Забрать ошибки"
-      ></button>
-
-      <button
-        pButton type="button"
-        class="p-button-raised p-button-rounded"
-        (click)="clearErrors()"
+        (click)="search()"
         label="Обновить"
+      ></button>
+      <button *ngIf="this.selectedRows.length > 0"
+              [disabled]="this.selectedRows.length == 0"
+              pButton type="button"
+              class="p-button-success p-button-rounded"
+              (click)="setErrorProcessed()"
+              [label]="this.showArchive?
+              'Отметить выделенные позиции как неверифицированные' :
+              'Отметить выделенные позиции как верифицированные'"
       ></button>
     </div>
   </p-toolbar>
-  <p-table [value]="results">
+  <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of cols" style="text-align: center">
@@ -28,13 +33,14 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-car>
-      <tr>
+    <ng-template pTemplate="body" let-rowData>
+      <tr [pSelectableRow]="rowData">
         <td *ngFor="let col of cols">
-          {{car[col.field]}}
+          {{rowData[col.field]}}
         </td>
       </tr>
     </ng-template>
   </p-table>
+
 </div>
 

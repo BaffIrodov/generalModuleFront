@@ -47,23 +47,29 @@
   ></button>
   &nbsp;
   <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт парсинг</label>
-  <p-toolbar>
-
-  </p-toolbar>
-  <p-table [value]="results">
-    <ng-template pTemplate="header">
+  <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows" (onRowSelect)="recalcutaleSummaryRow()">
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of cols">
+        <th *ngFor="let col of columns">
           {{col.header}}
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-car>
-      <tr>
+    <ng-template pTemplate="body" let-rowData>
+      <tr [pSelectableRow]="rowData">
         <td *ngFor="let col of cols">
-          {{car[col.field]}}
+          {{rowData[col.field]}}
         </td>
       </tr>
     </ng-template>
   </p-table>
+
+  <p-toolbar *ngIf="this.selectedRows.length > 0">
+    <label>
+      {{
+      "По выделенным позициям: на " + this.summaryRow.batchSize + " позиций затрачено " + (this.summaryRow.batchTime/1000).toFixed(0) + " секунд времени"
+      + "     На одну позицию приходится " + this.summaryRowDivide.toFixed(2) + " секунд затрат"
+      }}
+    </label>
+  </p-toolbar>
 </div>
