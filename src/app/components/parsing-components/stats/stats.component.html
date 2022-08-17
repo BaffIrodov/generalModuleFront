@@ -6,8 +6,8 @@
     </label>
 
     <label>
-      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0') + "/" + this.totalCount}}
-      <p-progressBar *ngIf="this.totalCount" [value]="100-(this.availableCount.valueOf()/this.totalCount.valueOf())*100"></p-progressBar>
+      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0') + "/" + this.getTotal()}}
+      <p-progressBar [value]="getProgress()"></p-progressBar>
     </label>
 
 

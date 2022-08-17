@@ -3,6 +3,7 @@ import {StatsService} from "../../../services/parsing-services/stats.service";
 import {StatsRequest} from "../../../domain/parsing-domain/statsRequest";
 import {StatsResponse} from "../../../domain/parsing-domain/statsResponse";
 import {Table} from "primeng/table";
+import {ProgressService} from "../../../services/common-services/progress.service";
 
 @Component({
   selector: 'app-stats',
@@ -11,12 +12,11 @@ import {Table} from "primeng/table";
 })
 export class StatsComponent implements OnInit {
 
-  constructor(private statsService: StatsService) { }
+  constructor(private statsService: StatsService, private progressService: ProgressService) { }
 
   writeButtonIsAvailable = false;
   workflowIsRun = true; //если фолс - то остановим цикл запросов
   availableCount: Number;
-  totalCount: Number;
 
   statsRequest = new StatsRequest();
 
@@ -57,13 +57,15 @@ export class StatsComponent implements OnInit {
   }
 
   async getTotalCount() {
-    this.statsService.getTotalCountForParsing()
-      .subscribe({
-        next: (res) => {
-          this.totalCount = res;
-        },
-        error: (e) => console.error(e)
-      });
+    if(!this.progressService.mapComponentToTotal.get("stats")) {
+      this.statsService.getTotalCountForParsing()
+        .subscribe({
+          next: (res) => {
+            this.progressService.mapComponentToTotal.set("stats", res);
+          },
+          error: (e) => console.error(e)
+        });
+    }
   }
 
   async getResponseAnalytics() {
@@ -79,12 +81,13 @@ export class StatsComponent implements OnInit {
   }
 
   writePlayers(): void {
+    this.progressService.mapComponentToLoading.set('stats', true);
     this.statsService.writeStatsPlayers(this.statsRequest)
       .subscribe({
         next: (res) => {
           this.results.push(res);
           this.getAvailableCount();
-          if(this.availableCount != 0 && this.workflowIsRun == true) {
+          if(this.availableCount != 0 && this.workflowIsRun) {
             this.writePlayers();
           }
         },
@@ -109,6 +112,23 @@ export class StatsComponent implements OnInit {
 
   stopWorkflow() {
     this.workflowIsRun = false;
+  }
+
+  getTotal() {
+    if(this.progressService.mapComponentToTotal.get("stats")) {
+      return this.progressService.mapComponentToTotal.get("stats")
+    } else {
+      return -1;
+    }
+  }
+
+  getProgress() {
+    if(this.progressService.mapComponentToTotal.get("stats") && this.availableCount) {
+      if(this.progressService.mapComponentToTotal.get("stats") == undefined) {
+        this.progressService.mapComponentToTotal.set("stats", 0);
+      }
+      return 100 - (this.availableCount.valueOf() / (this.progressService.mapComponentToTotal.get("stats") || 0).valueOf() * 100);
+    } else return null;
   }
 
   columnsConstruct() {

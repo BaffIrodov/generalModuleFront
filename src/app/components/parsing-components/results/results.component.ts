@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ResultsService} from "../../../services/parsing-services/results.service";
 import {ResultsRequest} from "../../../domain/parsing-domain/resultsRequest";
+import {ProgressService} from "../../../services/common-services/progress.service";
 
 @Component({
   selector: 'app-results',
@@ -9,13 +10,18 @@ import {ResultsRequest} from "../../../domain/parsing-domain/resultsRequest";
 })
 export class ResultsComponent implements OnInit {
 
-  constructor(private resultsService: ResultsService) { }
+  constructor(private resultsService: ResultsService,
+              private progressService: ProgressService) { }
 
   resultsRequest = new ResultsRequest();
   writeButtonIsAvailable = false;
   parseDone: boolean;
 
   ngOnInit(): void {
+    console.log(this.progressService.mapComponentToTotal.get("results"));
+    let totalCount = 100;
+    this.progressService.mapComponentToTotal.set("results", totalCount);
+    console.log(this.progressService.mapComponentToTotal.get("results"));
   }
 
   requestValidate() {
