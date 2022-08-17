@@ -17,6 +17,10 @@ export class StatsService {
     return this.http.get<Number>(url + 'available-count');
   }
 
+  getTotalCountForParsing(): Observable<Number> {
+    return this.http.get<Number>(url + 'total-count');
+  }
+
   getResponseAnalytics(): Observable<StatsResponse[]> {
     return this.http.get<StatsResponse[]>(url + 'response-analytics');
   }

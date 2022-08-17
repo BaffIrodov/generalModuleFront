@@ -29,45 +29,12 @@
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
     <div *ngIf="matches"> Полное время парсинга: {{fullTime}}</div>
   </div>
-  <table border="3" style="border-collapse: separate" *ngIf="matches">
-    <thead>
-    <tr align="center" style="background: darkgrey">
-      <th colspan="3">Действующие матчи</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let match of matchesArr">
-    <tr style="border: 0; border-collapse: unset">
-      <td colspan="3">Время парсинга: {{match.matchTime}}</td>
-    </tr>
-    <tr>
-      <td colspan="3"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
-    </tr>
-    <tr style="text-align: center">
-      <td width="45%">{{match.leftTeam}}</td>
-      <td width="10%"><b>{{match.matchFormat}}</b></td>
-      <td width="45%">{{match.rightTeam}}</td>
-    </tr>
-    <tr>
-      <td align="right"><b>{{match.leftTeamOdds}}</b></td>
-      <td align="center">
-        <select>
-          <option selected>Карты</option>
-          <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
-        </select>
-      </td>
-      <td><b>{{match.rightTeamOdds}}</b></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <label><br>Здесь будет табличка с primeng<br></label>
 
   <div *ngIf="matches">
     <p-table [value]="matchesArr">
       <ng-template pTemplate="header">
-        <tr
-          style="background: darkgrey; text-align: center; border-style: ridge; border-width: 3px">
-          <th colspan="3">
+        <tr>
+          <th colspan="3" style="text-align: center">
             Действующие матчи
           </th>
         </tr>

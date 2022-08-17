@@ -16,6 +16,7 @@ export class StatsComponent implements OnInit {
   writeButtonIsAvailable = false;
   workflowIsRun = true; //если фолс - то остановим цикл запросов
   availableCount: Number;
+  totalCount: Number;
 
   statsRequest = new StatsRequest();
 
@@ -30,6 +31,7 @@ export class StatsComponent implements OnInit {
   async ngOnInit() {
     await this.getResponseAnalytics(); //спрашиваем только один раз - всё, что будет добито во время работы пользователя докинется на фронте
     await this.getAvailableCount();
+    await this.getTotalCount();
     this.columnsConstruct();
   }
 
@@ -49,6 +51,16 @@ export class StatsComponent implements OnInit {
         next: (res) => {
           this.availableCount = res;
           this.availableCount == 0 ? this.writeButtonIsAvailable = false : null;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async getTotalCount() {
+    this.statsService.getTotalCountForParsing()
+      .subscribe({
+        next: (res) => {
+          this.totalCount = res;
         },
         error: (e) => console.error(e)
       });

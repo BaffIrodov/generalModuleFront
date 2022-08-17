@@ -6,8 +6,11 @@
     </label>
 
     <label>
-      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0')}}
+      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0') + "/" + this.totalCount}}
+      <p-progressBar *ngIf="this.totalCount" [value]="100-(this.availableCount.valueOf()/this.totalCount.valueOf())*100"></p-progressBar>
     </label>
+
+
 
     <button
       pButton type="button"
