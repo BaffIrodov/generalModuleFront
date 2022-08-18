@@ -24,6 +24,16 @@ export class MatchesComponent implements OnInit {
   matches: number;
   matchesArr: MatchesRequest[];
   fullTime: number;
+  processedMatches: number;
+
+  getMatchesCount() {
+    this.matchesService.getTotalMatchesCountForParsing().subscribe({
+      next: (count) => {
+        this.matches = count.valueOf();
+      },  error: (e) => console.error(e)
+    });
+    this.getMatches();
+  }
 
   getMatches(): void {
     this.clearMatches();
@@ -33,7 +43,7 @@ export class MatchesComponent implements OnInit {
         matchesLink.matches.forEach(element => {
           this.matchesArr.push(element);
         })
-        this.matches = matchesLink.matches.length;
+        //this.matches = matchesLink.matches.length;
         this.fullTime = matchesLink.fullTime;
       }, error: (e) => console.error(e)
     });
@@ -48,7 +58,7 @@ export class MatchesComponent implements OnInit {
   async resetButton() {
     this.writeButtonIsAvailable = true;
     let interval = setInterval(() => {
-      if (this.matches) {
+      if (this.matchesArr.length == this.matches) {
         this.writeButtonIsAvailable = false;
         clearInterval(interval);
       }

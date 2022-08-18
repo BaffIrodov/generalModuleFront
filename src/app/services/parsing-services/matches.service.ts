@@ -17,4 +17,12 @@ export class MatchesService {
   writeMatchesLinks(): Observable<MatchesFullRequest>{
     return this.http.post<MatchesFullRequest>(url + 'write-links', null);
   }
+
+  getTotalMatchesCountForParsing(): Observable<Number>{
+    return this.http.get<Number>(url + 'total-matches-count');
+  }
+
+  getProcessedMatchesCount(): Observable<Number>{
+    return this.http.get<Number>(url + 'processed-matches-count');
+  }
 }

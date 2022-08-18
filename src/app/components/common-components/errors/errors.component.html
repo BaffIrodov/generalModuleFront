@@ -25,6 +25,15 @@
       ></button>
     </div>
   </p-toolbar>
+
+  <button pButton type="button" class="p-button-raised p-button-rounded" label="Выделить всё" (click)="selectAll()"
+          style="background: darkcyan"
+  ></button>
+
+  <button pButton type="button" class="p-button-raised p-button-rounded" label="Отменить выделение" (click)="deselect()"
+          style="background: darkcyan"
+  ></button>
+
   <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows">
     <ng-template pTemplate="header">
       <tr>

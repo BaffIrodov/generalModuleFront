@@ -12,7 +12,8 @@ import {ProgressService} from "../../../services/common-services/progress.servic
 })
 export class StatsComponent implements OnInit {
 
-  constructor(private statsService: StatsService, private progressService: ProgressService) { }
+  constructor(private statsService: StatsService, private progressService: ProgressService) {
+  }
 
   writeButtonIsAvailable = false;
   workflowIsRun = true; //если фолс - то остановим цикл запросов
@@ -45,6 +46,15 @@ export class StatsComponent implements OnInit {
     this.summaryRowDivide = this.summaryRow.batchTime / this.summaryRow.batchSize / 1000;
   }
 
+  selectAll() {
+    this.selectedRows = this.results;
+    this.recalcutaleSummaryRow();
+  }
+
+  deselect() {
+    this.selectedRows = [];
+  }
+
   async getAvailableCount() {
     this.statsService.getAvailableCountForParsing()
       .subscribe({
@@ -57,7 +67,7 @@ export class StatsComponent implements OnInit {
   }
 
   async getTotalCount() {
-    if(!this.progressService.mapComponentToTotal.get("stats")) {
+    if (!this.progressService.mapComponentToTotal.get("stats")) {
       this.statsService.getTotalCountForParsing()
         .subscribe({
           next: (res) => {
@@ -72,7 +82,7 @@ export class StatsComponent implements OnInit {
     this.statsService.getResponseAnalytics()
       .subscribe({
         next: (res) => {
-          if(!!res) {
+          if (!!res) {
             this.results = res;
           }
         },
@@ -87,7 +97,7 @@ export class StatsComponent implements OnInit {
         next: (res) => {
           this.results.push(res);
           this.getAvailableCount();
-          if(this.availableCount != 0 && this.workflowIsRun) {
+          if (this.availableCount != 0 && this.workflowIsRun) {
             this.writePlayers();
           }
         },
@@ -115,7 +125,7 @@ export class StatsComponent implements OnInit {
   }
 
   getTotal() {
-    if(this.progressService.mapComponentToTotal.get("stats")) {
+    if (this.progressService.mapComponentToTotal.get("stats")) {
       return this.progressService.mapComponentToTotal.get("stats")
     } else {
       return -1;
@@ -123,19 +133,19 @@ export class StatsComponent implements OnInit {
   }
 
   getProgress() {
-    if(this.progressService.mapComponentToTotal.get("stats") && this.availableCount) {
-      if(this.progressService.mapComponentToTotal.get("stats") == undefined) {
+    if (this.progressService.mapComponentToTotal.get("stats") && this.availableCount) {
+      if (this.progressService.mapComponentToTotal.get("stats") == undefined) {
         this.progressService.mapComponentToTotal.set("stats", 0);
       }
-      return 100 - (this.availableCount.valueOf() / (this.progressService.mapComponentToTotal.get("stats") || 0).valueOf() * 100);
+      return (100 - (this.availableCount.valueOf() / (this.progressService.mapComponentToTotal.get("stats") || 0).valueOf() * 100)).toFixed(2);
     } else return null;
   }
 
   columnsConstruct() {
     this.cols = [
-      { field: 'batchSize', header: 'Размер пачки' },
-      { field: 'batchTime', header: 'Время обработки' },
-      { field: 'requestDate', header: 'Дата обработки' }
+      {field: 'batchSize', header: 'Размер пачки'},
+      {field: 'batchTime', header: 'Время обработки'},
+      {field: 'requestDate', header: 'Дата обработки'}
     ];
   }
 

@@ -62,6 +62,14 @@ export class ErrorsComponent implements OnInit {
     });
   }
 
+  selectAll() {
+    this.selectedRows = this.results;
+  }
+
+  deselect() {
+    this.selectedRows = [];
+  }
+
   columnsConstruct() {
     this.cols = [
       {field: 'classAndLine', header: 'Класс и строка'},
