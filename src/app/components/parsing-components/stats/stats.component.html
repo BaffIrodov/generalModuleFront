@@ -5,10 +5,9 @@
       Страница матчесов
     </label>
 
-    <label>
-      {{"Количество доступных игр для парсинга: " + (this.availableCount ? this.availableCount : '0') + "/" + this.getTotal()}}
-      <p-progressBar [value]="getProgress()"></p-progressBar>
-    </label>
+    <div>
+      <app-progress #progressComponent [moduleName]="'stats'"></app-progress>
+    </div>
 
 
 
@@ -36,7 +35,7 @@
   <button
     pButton type="button"
     class="p-button-raised p-button-rounded"
-    (click)="writePlayers(); workflowIsRun = true"
+    (click)="writePlayers()"
     [disabled]="!requestValidate() || writeButtonIsAvailable"
     label="Запарсить всё доступное"
   ></button>
@@ -44,8 +43,8 @@
   <button
     pButton type="button"
     class="p-button-raised p-button-rounded"
-    (click)="stopWorkflow()"
-    [disabled]="workflowIsRun == false || !statsRequest.batchSize"
+    (click)="stopLoading()"
+    [disabled]="!statsRequest.batchSize && !this.progressService.mapComponentToLoading.get('stats')"
     label="Остановить парсинг"
   ></button>
   &nbsp;

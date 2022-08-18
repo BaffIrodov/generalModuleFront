@@ -58,6 +58,7 @@ import { MatchesComponent } from './components/parsing-components/matches/matche
 import { DebugComponent } from './components/common-components/debug/debug.component';
 import { ErrorsComponent } from './components/common-components/errors/errors.component';
 import { CalculatingComponent } from './components/calculating-components/calculating/calculating.component';
+import { ProgressComponent } from './components/common-components/progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { CalculatingComponent } from './components/calculating-components/calcul
     MatchesComponent,
     DebugComponent,
     ErrorsComponent,
-    CalculatingComponent
+    CalculatingComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,

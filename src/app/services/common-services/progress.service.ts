@@ -8,5 +8,6 @@ export class ProgressService {
   constructor() { }
 
   mapComponentToTotal = new Map<String, Number>();
+  mapComponentToAvailable = new Map<String, Number>();
   mapComponentToLoading = new Map<String, Boolean>();
 }

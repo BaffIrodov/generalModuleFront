@@ -1,0 +1,4 @@
+<label>
+  {{"Прогресс операции: " + (this.availableCount ? this.availableCount : '0') + "/" + this.totalCount}}
+  <p-progressBar [value]="getProgress()"></p-progressBar>
+</label>

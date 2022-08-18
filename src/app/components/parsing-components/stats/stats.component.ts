@@ -4,6 +4,7 @@ import {StatsRequest} from "../../../domain/parsing-domain/statsRequest";
 import {StatsResponse} from "../../../domain/parsing-domain/statsResponse";
 import {Table} from "primeng/table";
 import {ProgressService} from "../../../services/common-services/progress.service";
+import {ProgressComponent} from "../../common-components/progress/progress.component";
 
 @Component({
   selector: 'app-stats',
@@ -12,28 +13,35 @@ import {ProgressService} from "../../../services/common-services/progress.servic
 })
 export class StatsComponent implements OnInit {
 
-  constructor(private statsService: StatsService, private progressService: ProgressService) {
+  constructor(private statsService: StatsService, public progressService: ProgressService) {
   }
 
+  moduleName = 'stats';
   writeButtonIsAvailable = false;
-  workflowIsRun = true; //если фолс - то остановим цикл запросов
-  availableCount: Number;
 
   statsRequest = new StatsRequest();
-
   results: StatsResponse[] = [];
   selectedRows: StatsResponse[] = [];
-
   summaryRow: StatsResponse = new StatsResponse();
   summaryRowDivide = 0;
-
   cols: any[];
+
+  responseAnalyticsReady = false;
+  availableCountReady = false;
+  totalCountReady = false;
+
+
+
+  @ViewChild('progressComponent') progressComponent: ProgressComponent;
 
   async ngOnInit() {
     await this.getResponseAnalytics(); //спрашиваем только один раз - всё, что будет добито во время работы пользователя докинется на фронте
     await this.getAvailableCount();
     await this.getTotalCount();
     this.columnsConstruct();
+    setTimeout(() => {
+      this.progressComponent.ngOnInit();
+    }, 500);
   }
 
   recalcutaleSummaryRow() {
@@ -59,19 +67,20 @@ export class StatsComponent implements OnInit {
     this.statsService.getAvailableCountForParsing()
       .subscribe({
         next: (res) => {
-          this.availableCount = res;
-          this.availableCount == 0 ? this.writeButtonIsAvailable = false : null;
+          this.progressService.mapComponentToAvailable.set(this.moduleName, res);
+          this.progressComponent.refresh();
+          if (res == 0) this.writeButtonIsAvailable = false;
         },
         error: (e) => console.error(e)
       });
   }
 
   async getTotalCount() {
-    if (!this.progressService.mapComponentToTotal.get("stats")) {
+    if (!this.progressService.mapComponentToTotal.get(this.moduleName)) {
       this.statsService.getTotalCountForParsing()
         .subscribe({
           next: (res) => {
-            this.progressService.mapComponentToTotal.set("stats", res);
+            this.progressService.mapComponentToTotal.set(this.moduleName, res);
           },
           error: (e) => console.error(e)
         });
@@ -91,13 +100,13 @@ export class StatsComponent implements OnInit {
   }
 
   writePlayers(): void {
-    this.progressService.mapComponentToLoading.set('stats', true);
+    this.progressService.mapComponentToLoading.set(this.moduleName, true);
     this.statsService.writeStatsPlayers(this.statsRequest)
       .subscribe({
         next: (res) => {
           this.results.push(res);
           this.getAvailableCount();
-          if (this.availableCount != 0 && this.workflowIsRun) {
+          if (this.progressService.mapComponentToAvailable.get(this.moduleName) != 0 && this.progressService.mapComponentToLoading.get(this.moduleName)) {
             this.writePlayers();
           }
         },
@@ -109,7 +118,7 @@ export class StatsComponent implements OnInit {
   async disableWriteButton() {
     this.writeButtonIsAvailable = true;
     let interval = setInterval(() => {
-      if (!this.workflowIsRun) {
+      if (!this.progressService.mapComponentToLoading.get(this.moduleName)) {
         this.writeButtonIsAvailable = false;
         clearInterval(interval);
       }
@@ -120,25 +129,8 @@ export class StatsComponent implements OnInit {
     return (!!this.statsRequest.batchSize);
   }
 
-  stopWorkflow() {
-    this.workflowIsRun = false;
-  }
-
-  getTotal() {
-    if (this.progressService.mapComponentToTotal.get("stats")) {
-      return this.progressService.mapComponentToTotal.get("stats")
-    } else {
-      return -1;
-    }
-  }
-
-  getProgress() {
-    if (this.progressService.mapComponentToTotal.get("stats") && this.availableCount) {
-      if (this.progressService.mapComponentToTotal.get("stats") == undefined) {
-        this.progressService.mapComponentToTotal.set("stats", 0);
-      }
-      return (100 - (this.availableCount.valueOf() / (this.progressService.mapComponentToTotal.get("stats") || 0).valueOf() * 100)).toFixed(2);
-    } else return null;
+  stopLoading() {
+    this.progressService.mapComponentToLoading.set(this.moduleName, false);
   }
 
   columnsConstruct() {
