@@ -29,7 +29,7 @@ export class ProgressComponent implements OnInit {
   }
 
   getProgress() {
-    if (this.totalCount && this.availableCount) {
+    if (this.totalCount!=-1 && this.availableCount>=0) {
       return (100 - 100*(this.availableCount.valueOf() / this.totalCount.valueOf())).toFixed(2);
     } else return null;
   }

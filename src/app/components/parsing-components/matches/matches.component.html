@@ -27,6 +27,9 @@
       </div>
     </form>
     <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
+    <div>
+      <app-progress #progressComponent [moduleName]="'matches'"></app-progress>
+    </div>
     <div *ngIf="matches"> Полное время парсинга: {{fullTime}}</div>
   </div>
 
