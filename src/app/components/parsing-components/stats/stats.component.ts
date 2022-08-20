@@ -101,6 +101,8 @@ export class StatsComponent implements OnInit {
 
   writePlayers(): void {
     this.progressService.mapComponentToLoading.set(this.moduleName, true);
+    this.progressService.mapComponentToStartTime.set(this.moduleName, new Date().getTime())
+    this.progressComponent.getPredictableTime();
     this.statsService.writeStatsPlayers(this.statsRequest)
       .subscribe({
         next: (res) => {

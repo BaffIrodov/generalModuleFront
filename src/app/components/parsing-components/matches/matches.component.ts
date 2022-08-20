@@ -22,11 +22,6 @@ export class MatchesComponent implements OnInit {
     }, 500);
   }
 
-  getButtonText() {
-    let defaultText = 'Распарсить Matches';
-    return defaultText;
-  }
-
   moduleName = 'matches';
   writeButtonIsAvailable = false;
   matches: number;

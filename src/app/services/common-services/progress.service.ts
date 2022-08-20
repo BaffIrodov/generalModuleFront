@@ -10,4 +10,5 @@ export class ProgressService {
   mapComponentToTotal = new Map<String, Number>();
   mapComponentToAvailable = new Map<String, Number>();
   mapComponentToLoading = new Map<String, Boolean>();
+  mapComponentToStartTime = new Map<String, Number>;
 }
