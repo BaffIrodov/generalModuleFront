@@ -16,6 +16,11 @@ export class CalculatingService {
     return this.http.get<MapsCalculatingQueueResponse>(url + 'current-queue-size');
   }
 
+  createPlayerForceTable(): Observable<void> {
+    console.log("Начало создания playerForce таблицы")
+    return this.http.get<void>(url + 'create-player-force-table');
+  }
+
   createQueue(): Observable<MapsCalculatingQueueResponse> {
     return this.http.get<MapsCalculatingQueueResponse>(url + 'create-queue');
   }

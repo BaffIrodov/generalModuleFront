@@ -1,10 +1,45 @@
-<div>
-  <button
-    pButton type="button"
-    class="p-button-raised"
-    (click)="getCurrentQueueSize()"
-    label="Получить текущий размер очереди"
-  ></button>
+<p-tabView>
+  <p-tabPanel header="Первоначальная настройка">
+    <button
+      pButton type="button"
+      class="p-button-raised"
+      [disabled]="loading"
+      (click)="createPlayerForceTable()"
+      label="Создать таблицу playerForce"
+      pTooltip="Для расчета нужно сначала создать таблицу и заполнить её дефолтным значением силы каждого игрока"
+    ></button>
+    <label *ngIf="loading" style="margin-left: 10px">
+      Происходит создание таблицы (занимает около пары минут)
+    </label>
+  </p-tabPanel>
+  <p-tabPanel header="Настройка">
+    <button
+      pButton type="button"
+      style="margin-left: 5px"
+      class="p-button-danger"
+      (click)="createQueue()"
+      label="Создать очередь"
+      pTooltip="Создается очередь на расчет. Берутся только нерасчитанные ранее statsId"
+      [disabled]="loading"
+    ></button>
+    <button
+      pButton type="button"
+      class="p-button-raised"
+      style="margin-left: 10px"
+      (click)="getCurrentQueueSize()"
+      label="Получить текущий размер очереди"
+    ></button>
+  </p-tabPanel>
+  <p-tabPanel header="Дебаг">
+    <button
+      pButton type="button"
+      class="p-button-success"
+      (click)="debug()"
+      label="Дебаг расчета"
+    ></button>
+  </p-tabPanel>
+</p-tabView>
+<p-toolbar>
   <label>
     {{"Количество необработанных матчей в очереди " +
   (this.actualResponse.currentNotProcessedMaps ?
@@ -12,19 +47,4 @@
     '0')
     }}
   </label>
-  <button
-    pButton type="button"
-    style="margin-left: 5px"
-    class="p-button-danger"
-    (click)="createQueue()"
-    label="Создать очередь"
-    [disabled]="loading"
-  ></button>
-  <button
-    pButton type="button"
-    style="margin-left: 5px"
-    class="p-button-success"
-    (click)="debug()"
-    label="Дебаг расчета"
-  ></button>
-</div>
+</p-toolbar>

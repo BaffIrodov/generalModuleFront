@@ -28,6 +28,18 @@ export class CalculatingComponent implements OnInit {
       });
   }
 
+  async createPlayerForceTable() {
+    this.loading = true;
+    this.calculatingService.createPlayerForceTable()
+      .subscribe({
+        next: (res) => {
+          console.log("playerForce таблица создана");
+          this.loading = false;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
   async createQueue() {
     this.loading = true;
     this.calculatingService.createQueue()
