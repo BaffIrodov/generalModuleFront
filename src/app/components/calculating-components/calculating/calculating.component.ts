@@ -53,12 +53,37 @@ export class CalculatingComponent implements OnInit {
       });
   }
 
+  async calculatePlayersForces() {
+    this.loading = true;
+    this.calculatingService.calculatePlayersForces()
+      .subscribe({
+        next: (res) => {
+          console.log("Силы игроков расчитаны");
+          this.loading = false;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
   async debug() {
     this.loading = true;
     this.calculatingService.debug()
       .subscribe({
         next: (res) => {
-          //this.actualResponse = res;
+          console.log("Debug");
+          this.loading = false;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async resetPlayersForces() {
+    this.loading = true;
+    this.calculatingService.resetPlayersForces()
+      .subscribe({
+        next: (res) => {
+          console.log("Силы игроков сброшены в дефолт");
+          this.loading = false;
         },
         error: (e) => console.error(e)
       });

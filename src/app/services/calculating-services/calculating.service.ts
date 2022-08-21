@@ -25,7 +25,15 @@ export class CalculatingService {
     return this.http.get<MapsCalculatingQueueResponse>(url + 'create-queue');
   }
 
+  calculatePlayersForces(): Observable<void> {
+    return this.http.get<void>(url + 'calculate-forces');
+  }
+
   debug(): Observable<void> {
     return this.http.get<void>(url + 'debug');
+  }
+
+  resetPlayersForces(): Observable<void> {
+    return this.http.get<void>(url + 'reset-players-forces');
   }
 }

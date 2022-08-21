@@ -9,7 +9,7 @@
       pTooltip="Для расчета нужно сначала создать таблицу и заполнить её дефолтным значением силы каждого игрока"
     ></button>
     <label *ngIf="loading" style="margin-left: 10px">
-      Происходит создание таблицы (занимает около пары минут)
+      Происходит создание таблицы (занимает около 30ти секунд)
     </label>
   </p-tabPanel>
   <p-tabPanel header="Настройка">
@@ -30,12 +30,20 @@
       label="Получить текущий размер очереди"
     ></button>
   </p-tabPanel>
-  <p-tabPanel header="Дебаг">
+  <p-tabPanel header="Расчет">
     <button
       pButton type="button"
       class="p-button-success"
-      (click)="debug()"
-      label="Дебаг расчета"
+      (click)="calculatePlayersForces()"
+      label="Запуск расчета"
+    ></button>
+  </p-tabPanel>
+  <p-tabPanel header="Дебаг">
+    <button
+      pButton type="button"
+      class="p-button-warning"
+      (click)="resetPlayersForces()"
+      label="Сбросить силы игроков в дефолт"
     ></button>
   </p-tabPanel>
 </p-tabView>
