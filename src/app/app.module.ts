@@ -59,6 +59,7 @@ import { DebugComponent } from './components/common-components/debug/debug.compo
 import { ErrorsComponent } from './components/common-components/errors/errors.component';
 import { CalculatingComponent } from './components/calculating-components/calculating/calculating.component';
 import { ProgressComponent } from './components/common-components/progress/progress.component';
+import {SplitterModule} from "primeng/splitter";
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { ProgressComponent } from './components/common-components/progress/progr
     SidebarModule,
     ColorPickerModule,
     SelectButtonModule,
-    SliderModule
+    SliderModule,
+    SplitterModule
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent]
