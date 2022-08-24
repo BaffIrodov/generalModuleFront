@@ -20,26 +20,47 @@ export class MatchesComponent implements OnInit {
     setTimeout(() => {
       this.progressComponent.ngOnInit();
     }, 500);
+    await this.getMatchesFromDB();
   }
 
   moduleName = 'matches';
   writeButtonIsAvailable = false;
   matches: number;
-  matchesArr: MatchesRequest[];
+  matchesArr: MatchesRequest[] = [];
+  matchesUrl: String[] = [];
   fullTime: number;
   processedMatches: number = 0;
 
   getMatchesCount() {
-    this.getMatches();
+    this.clearMatches();
+    this.resetButton();
+    this.getMatchesCountInDB();
     if (!this.progressService.mapComponentToTotal.get(this.moduleName)) {
       this.matchesService.getTotalMatchesCountForParsing().subscribe({
-        next: (count) => {
-          this.matches = count.valueOf();
+        next: (allLinks) => {
+          this.matchesUrl = allLinks;
+          this.matches = allLinks.length;
           this.progressService.mapComponentToTotal.set(this.moduleName, this.matches);
         }, error: (e) => console.error(e)
       });
     }
-    this.getMatchesCountInDB();
+    this.getMatches();
+  }
+
+  getMatches() {
+    let i = 0;
+    let interval = setInterval(() => {
+      if (i == this.matches || !this.writeButtonIsAvailable) {
+        clearInterval(interval);
+      } else {
+        this.matchesService.writeOneMatch(this.matchesUrl[i]).subscribe({
+          next: (matchInfo) => {
+            this.matchesArr.push(matchInfo);
+          }, error: (e) => console.error(e)
+        });
+        i++;
+      }
+    }, 600);
   }
 
   async getMatchesCountInDB() {
@@ -49,7 +70,7 @@ export class MatchesComponent implements OnInit {
           this.processedMatches = count.valueOf();
           this.progressService.mapComponentToAvailable.set(this.moduleName, this.matches - count.valueOf());
           this.progressComponent.refresh();
-          if (this.matches.valueOf() == count.valueOf()) {
+          if (this.matches == count.valueOf()) {
             this.writeButtonIsAvailable = false;
             clearInterval(interval);
           }
@@ -58,23 +79,41 @@ export class MatchesComponent implements OnInit {
     }, 500);
   }
 
-  async getMatches() {
-    this.clearMatches();
-    this.matchesService.writeMatchesLinks().subscribe({
-      next: (matchesLink) => {
-        matchesLink.matches.forEach(element => {
-          this.matchesArr.push(element);
-        })
-        //this.matches = matchesLink.matches.length;
-        this.fullTime = matchesLink.fullTime;
+  async getMatchesFromDB() {
+    this.matchesService.getMatchesFromDB().subscribe({
+      next: (matches) => {
+        if (!!matches) {
+          this.matches = this.progressService.mapComponentToTotal.get(this.moduleName)!.valueOf();
+          this.matchesArr = matches;
+        }
       }, error: (e) => console.error(e)
     });
-    this.resetButton();
   }
 
-  clearMatches(): void {
+  // async getMatches() {
+  //   this.clearMatches();
+  //   this.matchesService.writeMatchesLinks().subscribe({
+  //     next: (matchesLink) => {
+  //       matchesLink.matches.forEach(element => {
+  //         this.matchesArr.push(element);
+  //       })
+  //       //this.matches = matchesLink.matches.length;
+  //       this.fullTime = matchesLink.fullTime;
+  //     }, error: (e) => console.error(e)
+  //   });
+  //   this.resetButton();
+  // }
+
+  clearMatches() {
     this.matchesArr = [];
     this.matches = 0;
+    this.progressService.mapComponentToTotal.set(this.moduleName, 0);
+    this.progressService.mapComponentToAvailable.set(this.moduleName, 0);
+    this.writeButtonIsAvailable = false;
+  }
+
+  async stopLoading() {
+    this.writeButtonIsAvailable = false;
   }
 
   async resetButton() {

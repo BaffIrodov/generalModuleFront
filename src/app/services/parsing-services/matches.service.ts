@@ -18,11 +18,18 @@ export class MatchesService {
     return this.http.get<MatchesFullRequest>(url + 'write-links');
   }
 
-  getTotalMatchesCountForParsing(): Observable<Number>{
-    return this.http.get<Number>(url + 'total-matches-count');
+  getTotalMatchesCountForParsing(): Observable<String[]>{
+    return this.http.get<String[]>(url + 'total-matches-count');
   }
 
+  writeOneMatch(link: String): Observable<MatchesRequest>{
+    return this.http.post<MatchesRequest>(url + 'write-one-match', link);
+  }
   getProcessedMatchesCount(): Observable<Number>{
     return this.http.get<Number>(url + 'processed-matches-count');
+  }
+
+  getMatchesFromDB(): Observable<MatchesRequest[]>{
+    return this.http.get<MatchesRequest[]>(url + 'matches-from-db');
   }
 }
