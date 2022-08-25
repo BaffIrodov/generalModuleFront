@@ -3,7 +3,6 @@
 <div>
 
   <p-toolbar>
-
     <div>
       <button
         (click)="getMatchesCount()"
@@ -28,52 +27,67 @@
 
       <button
         (click)="clearMatches()"
-        [disabled]="!matches"
+        [disabled]="!matchesArr"
         pButton type="button"
         class="p-button-raised p-button-rounded"
         style="background: brown"
         label="Очистить матчи"
       ></button>
     </div>
-
   </p-toolbar>
+
   <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
+  <div *ngIf="fullTime"> Полное время парсинга: {{fullTime}}</div>
   <div>
     <app-progress #progressComponent [moduleName]="'matches'"></app-progress>
   </div>
-  <div *ngIf="matches"> Полное время парсинга: {{fullTime}}</div>
-
 
   <p-table [value]="matchesArr" [scrollable]="true" scrollHeight="600px" [virtualScroll]="true"
-           [virtualScrollItemSize]="180">
+           [virtualScrollItemSize]="170">
     <ng-template pTemplate="header">
       <tr>
-        <th colspan="3" style="text-align: center">
-          Действующие матчи
+        <th colspan="3">
+          <label class="centerText">Действующие матчи</label>
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-match>
       <tr>
-        <td colspan="3" style="color: forestgreen">Время парсинга: {{match.matchTime}}</td>
-      </tr>
-      <tr>
-        <td colspan="3"><a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a></td>
-      </tr>
-      <tr>
-        <td style="width: 45%; text-align: center">{{match.leftTeam}}</td>
-        <td style="width: 10%; text-align: center"><b>{{match.matchFormat}}</b></td>
-        <td style="width: 45%; text-align: center">{{match.rightTeam}}</td>
-      </tr>
-      <tr>
-        <td style="text-align: right"><b>{{match.leftTeamOdds}}</b></td>
-        <td style="text-align: center">
-          <select>
-            <option selected>Карты</option>
-            <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
-          </select>
+        <td colspan="3" style="color: forestgreen">
+          <label>Время парсинга: {{match.matchTime}}</label>
         </td>
-        <td><b>{{match.rightTeamOdds}}</b></td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <a href="{{match.matchesUrl}}" target="_blank">{{match.matchesUrl}}</a>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 45%">
+          <label class="centerText">{{match.leftTeam}}</label>
+        </td>
+        <td style="width: 10%; font-weight: bold">
+          <label class="centerText">{{match.matchFormat}}</label>
+        </td>
+        <td style="width: 45%">
+          <label class="centerText">{{match.rightTeam}}</label>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: bold">
+          <label style="text-align: right; width: 100%">{{match.leftTeamOdds}}</label>
+        </td>
+        <td>
+          <div class="centerText">
+            <select style="text-align: center; width: 50%">
+              <option selected>Карты</option>
+              <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
+            </select>
+          </div>
+        </td>
+        <td style="font-weight: bold">
+          <label style="text-align: left; width: 100%">{{match.rightTeamOdds}}</label>
+        </td>
       </tr>
     </ng-template>
   </p-table>

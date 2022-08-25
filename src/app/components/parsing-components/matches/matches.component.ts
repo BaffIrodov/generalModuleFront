@@ -28,7 +28,7 @@ export class MatchesComponent implements OnInit {
   matches: number;
   matchesArr: MatchesRequest[] = [];
   matchesUrl: String[] = [];
-  fullTime: number;
+  fullTime: number = 0;
   processedMatches: number = 0;
 
   getMatchesCount() {
@@ -52,10 +52,15 @@ export class MatchesComponent implements OnInit {
     let interval = setInterval(() => {
       if (i == this.matches || !this.writeButtonIsAvailable) {
         clearInterval(interval);
+        this.progressService.mapComponentToLoading.set(this.moduleName, false);
       } else {
         this.matchesService.writeOneMatch(this.matchesUrl[i]).subscribe({
           next: (matchInfo) => {
             this.matchesArr.push(matchInfo);
+            this.fullTime += matchInfo.matchTime;
+            this.progressComponent.getPredictableTime();
+            this.progressService.mapComponentToLoading.set(this.moduleName, true);
+            this.progressService.mapComponentToStartTime.set(this.moduleName, new Date().getTime());
           }, error: (e) => console.error(e)
         });
         i++;
@@ -85,6 +90,7 @@ export class MatchesComponent implements OnInit {
         if (!!matches) {
           this.matches = this.progressService.mapComponentToTotal.get(this.moduleName)!.valueOf();
           this.matchesArr = matches;
+          matches.forEach(elem => this.fullTime += elem.matchTime);
         }
       }, error: (e) => console.error(e)
     });
@@ -105,14 +111,16 @@ export class MatchesComponent implements OnInit {
   // }
 
   clearMatches() {
-    this.matchesArr = [];
-    this.matches = 0;
+    this.matchesService.clearAllMatches().subscribe();
     this.progressService.mapComponentToTotal.set(this.moduleName, 0);
     this.progressService.mapComponentToAvailable.set(this.moduleName, 0);
+    this.fullTime = 0;
+    this.matches = 0;
+    this.matchesArr = [];
     this.writeButtonIsAvailable = false;
   }
 
-  async stopLoading() {
+  stopLoading() {
     this.writeButtonIsAvailable = false;
   }
 

@@ -32,4 +32,8 @@ export class MatchesService {
   getMatchesFromDB(): Observable<MatchesRequest[]>{
     return this.http.get<MatchesRequest[]>(url + 'matches-from-db');
   }
+
+  clearAllMatches(): Observable<void> {
+    return this.http.get<void>(url + 'clear-all-matches');
+  }
 }
