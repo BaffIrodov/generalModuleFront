@@ -42,12 +42,12 @@
     <app-progress #progressComponent [moduleName]="'matches'"></app-progress>
   </div>
 
-  <p-table [value]="matchesArr" [scrollable]="true" scrollHeight="600px" [virtualScroll]="true"
+  <p-table [columns]="cols" [value]="matchesArr" [scrollable]="true" scrollHeight="600px" [virtualScroll]="true"
            [virtualScrollItemSize]="170">
-    <ng-template pTemplate="header">
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th colspan="3">
-          <label class="centerText">Действующие матчи</label>
+        <th *ngFor="let col of columns">
+          <label class="centerText">{{col.header}}</label>
         </th>
       </tr>
     </ng-template>

@@ -17,10 +17,11 @@ export class MatchesComponent implements OnInit {
   @ViewChild('progressComponent') progressComponent: ProgressComponent;
 
   async ngOnInit() {
+    await this.getMatchesFromDB();
+    this.columnsConstruct();
     setTimeout(() => {
       this.progressComponent.ngOnInit();
     }, 500);
-    await this.getMatchesFromDB();
   }
 
   moduleName = 'matches';
@@ -30,6 +31,7 @@ export class MatchesComponent implements OnInit {
   matchesUrl: String[] = [];
   fullTime: number = 0;
   processedMatches: number = 0;
+  cols: any[];
 
   getMatchesCount() {
     this.clearMatches();
@@ -56,7 +58,8 @@ export class MatchesComponent implements OnInit {
       } else {
         this.matchesService.writeOneMatch(this.matchesUrl[i]).subscribe({
           next: (matchInfo) => {
-            this.matchesArr.push(matchInfo);
+            //this.matchesArr.push(matchInfo);
+            this.matchesArr = [...this.matchesArr, matchInfo];
             this.fullTime += matchInfo.matchTime;
             this.progressComponent.getPredictableTime();
             this.progressService.mapComponentToLoading.set(this.moduleName, true);
@@ -132,5 +135,11 @@ export class MatchesComponent implements OnInit {
         clearInterval(interval);
       }
     }, 1000);
+  }
+
+  columnsConstruct() {
+    this.cols = [
+      {header: 'Действующие матчи'}
+    ];
   }
 }
