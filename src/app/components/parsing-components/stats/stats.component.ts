@@ -109,7 +109,7 @@ export class StatsComponent implements OnInit {
           //this.results.push(res);
           this.results = [...this.results, res];
           this.getAvailableCount();
-          if ((this.progressService.mapComponentToAvailable.get(this.moduleName)!.valueOf() - res.batchSize) != 0 &&
+          if ((this.progressService.mapComponentToAvailable.get(this.moduleName)!.valueOf() - res.batchSize) > 0 &&
             this.progressService.mapComponentToLoading.get(this.moduleName)) {
             this.writePlayers();
           }

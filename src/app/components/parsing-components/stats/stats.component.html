@@ -61,7 +61,7 @@
   <label *ngIf="writeButtonIsAvailable" class="form-text text-danger" style="display: inline-block">Идёт парсинг</label>
 
   <p-table [columns]="cols" [value]="results" selectionMode="multiple" [(selection)]="selectedRows" (selectionChange)="recalcutaleSummaryRow()"
-           [scrollable]="true" scrollHeight="600px" [virtualScroll]="true" [virtualScrollItemSize]="40">
+           [scrollable]="true" scrollHeight="600px" [virtualScroll]="true" [virtualScrollItemSize]="40" style="table-layout: fixed">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns">
