@@ -6,6 +6,7 @@ import {MatchesComponent} from "./components/parsing-components/matches/matches.
 import {DebugComponent} from "./components/common-components/debug/debug.component";
 import {ErrorsComponent} from "./components/common-components/errors/errors.component";
 import {CalculatingComponent} from "./components/calculating-components/calculating/calculating.component";
+import {ImprovementComponent} from "./components/improvement-components/improvement/improvement.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'results', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'matches', component: MatchesComponent},
   { path: 'debug', component: DebugComponent},
   { path: 'errors', component: ErrorsComponent},
-  { path: 'calculating', component: CalculatingComponent}
+  { path: 'calculating', component: CalculatingComponent},
+  { path: 'improvement', component: ImprovementComponent}
 ];
 
 @NgModule({
