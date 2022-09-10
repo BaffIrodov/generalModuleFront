@@ -12,6 +12,10 @@ export class ImprovementService {
   constructor(private http: HttpClient) { }
 
   simpleImprovement(request: ImprovementRequest): Observable<void> {
-    return this.http.post<void>('http://localhost:8081/calculating/improvement', request);
+    return this.http.post<void>('http://localhost:8082/improvement/no-config', request);
+  }
+
+  getConfig(): Observable<Map<String, Object>> {
+    return this.http.get<Map<String, Object>>('http://localhost:8082/improvement/get-config');
   }
 }

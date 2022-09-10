@@ -1,13 +1,13 @@
-<p-tabView>
-  <p-tabPanel header="Тест">
+<p-tabView xmlns="http://www.w3.org/1999/html">
+  <p-tabPanel header="Простой расчет">
     <div class="form-row">
       <button #startButton
-        pButton type="button"
-        class="p-button-raised"
-        [disabled]="!request.testDatasetPercent || !requestValidating"
-        (click)="startImprovement()"
-        label="Одиночный расчет с фиксированным процентом, укажите процент: "
-        pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+              pButton type="button"
+              class="p-button-raised"
+              [disabled]="!request.testDatasetPercent || !requestValidating"
+              (click)="startImprovement()"
+              label="Одиночный расчет с фиксированным процентом, укажите процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета"
       ></button>
       <input
@@ -24,6 +24,56 @@
         Запрос составлен неверно
       </label>
     </div>
+  </p-tabPanel>
+  <p-tabPanel header="Тест">
+
+    <div class="form-row">
+      <button #startButton
+              pButton type="button"
+              class="p-button-raised"
+              [disabled]="!request.testDatasetPercent || !requestValidating"
+              (click)="startImprovement()"
+              label="Одиночный расчет с фиксированным процентом, укажите процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+                Остальное останется на датасет расчета"
+      ></button>
+      <input
+        class="form-control"
+        id="number2"
+        style="max-width: 200px; margin-left: 20px"
+        title="Количество страниц"
+        required
+        [(ngModel)]="request.testDatasetPercent"
+        (ngModelChange)="validatePercent()"
+        name="description"
+      />
+      <label *ngIf="!requestValidating" style="margin-left: 20px">
+        Запрос составлен неверно
+      </label>
+    </div>
+
+    <button #getButton
+            pButton type="button"
+            class="p-button-raised"
+            (click)="getConfig()"
+            label="Получить конфиг"
+            pTooltip="Получаем конфиг и можем изменять его"
+    ></button>
+
+    <p-dataView *ngIf="config" #dataView [value]="configList" [paginator]="false">
+      <p-header>
+        Состояние
+      </p-header>
+      <ng-template let-item pTemplate="listItem">
+        <div class="form-row">
+            <label style="width: 250px">{{item.name}}</label>
+            <input
+              [(ngModel)]="item.value"
+              (ngModelChange)="debug()"
+            />
+        </div>
+      </ng-template>
+    </p-dataView>
   </p-tabPanel>
   <p-tabPanel header="Улучшатор">
     <button

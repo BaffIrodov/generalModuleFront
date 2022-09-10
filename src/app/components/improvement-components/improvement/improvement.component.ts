@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ImprovementRequest} from "../../../domain/improvement-domain/improvementRequest";
 import {ImprovementService} from "../../../services/improvement-services/improvement.service";
+import {config} from "rxjs";
+import {ConfigMapAsList} from "../../../domain/improvement-domain/ConfigMapAsList";
 
 @Component({
   selector: 'app-improvement',
@@ -13,6 +15,8 @@ export class ImprovementComponent implements OnInit {
 
   request: ImprovementRequest = new ImprovementRequest();
   requestValidating: boolean = true;
+  config: Map<String, Object>;
+  configList: ConfigMapAsList[] = [];
 
   ngOnInit(): void {
   }
@@ -25,6 +29,36 @@ export class ImprovementComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  debug() {
+    console.log(this.config);
+    console.log(this.configList);
+  }
+
+  async getConfig() {
+    this.improvementService.getConfig()
+      .subscribe({
+        next: (res) => {
+          this.config = res;
+          this.convertConfigToList(res)
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  convertConfigToList(config: Object) {
+    const propertyNames = Object.getOwnPropertyNames(config);
+    const propertyValues = Object.values(config);
+    let index = 0;
+    propertyNames.forEach(k => {
+      let v = propertyValues[index];
+      let item = new ConfigMapAsList();
+      item.name = k;
+      item.value = v;
+      this.configList.push(item);
+      index++;
+    })
   }
 
   validatePercent() {
