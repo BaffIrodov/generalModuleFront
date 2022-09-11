@@ -25,14 +25,14 @@
       </label>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Тест">
-
+  <p-tabPanel header="Простой расчет с правкой конфига">
     <div class="form-row">
       <button #startButton
               pButton type="button"
               class="p-button-raised"
               [disabled]="!request.testDatasetPercent || !requestValidating || configChanged"
               (click)="improvementWithConfig()"
+              style="margin-left: 5px"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета"
@@ -65,7 +65,7 @@
             class="p-button-success"
             style="margin-left: 20px"
             (click)="saveConfig()"
-            [disabled] = "!this.configChanged"
+            [disabled]="!this.configChanged"
             label="Сохранить конфиг"
             pTooltip="Сохранить конфиг для передачи на бэк. Без сохранения не получится отправить запрос"
     ></button>
@@ -76,11 +76,124 @@
       </p-header>
       <ng-template let-item pTemplate="listItem">
         <div class="form-row">
-            <label style="width: 250px">{{item.name}}</label>
-            <input
-              [(ngModel)]="item.value"
-              (ngModelChange)="this.configChanged = true"
-            />
+          <label style="width: 250px">{{item.name}}</label>
+          <input
+            [(ngModel)]="item.value"
+            (ngModelChange)="this.configChanged = true"
+          />
+        </div>
+      </ng-template>
+    </p-dataView>
+  </p-tabPanel>
+  <p-tabPanel header="Расчет с паттернами для конфига">
+    <div class="form-row">
+      <button #startButton
+              pButton type="button"
+              class="p-button-raised"
+              [disabled]="!request.testDatasetPercent || !requestValidating || configChanged || !validatePattern()"
+              (click)="improvementWithConfigAndPattern()"
+              style="margin-left: 5px"
+              label="Одиночный расчет с фиксированным процентом, укажите процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+                Остальное останется на датасет расчета"
+      ></button>
+      <input
+        class="form-control"
+        id="number3"
+        style="max-width: 200px; margin-left: 20px"
+        title="Количество страниц"
+        required
+        [(ngModel)]="request.testDatasetPercent"
+        (ngModelChange)="validatePercent()"
+        name="description"
+      />
+      <label *ngIf="!requestValidating" style="margin-left: 20px">
+        Запрос составлен неверно
+      </label>
+    </div>
+
+    <button #getButton
+            pButton type="button"
+            class="p-button-raised"
+            (click)="getConfig()"
+            label="Получить конфиг"
+            pTooltip="Получаем конфиг и можем изменять его"
+    ></button>
+
+    <button #saveButton
+            pButton type="button"
+            class="p-button-success"
+            style="margin-left: 20px"
+            (click)="saveConfig()"
+            [disabled]="!this.configChanged"
+            label="Сохранить конфиг"
+            pTooltip="Сохранить конфиг для передачи на бэк. Без сохранения не получится отправить запрос"
+    ></button>
+
+    <div *ngIf="patternName" style="margin-top: 50px">
+
+      <p-button
+        [label]="patternTemplateNumber.configPropertyName"
+        [disabled]="true"
+      ></p-button>
+
+      <div class="form-row">
+        <label style="margin-left: 20px; width: 200px">Начальное значение: </label>
+
+        <input
+          style="max-width: 200px; margin-left: 20px"
+          required
+          [(ngModel)]="patternTemplateNumber.lowLimit"
+          (ngModelChange)="validatePercent()"
+        />
+      </div>
+
+      <div class="form-row">
+        <label style="margin-left: 20px; width: 200px">Конечное значение: </label>
+
+        <input
+          style="max-width: 200px; margin-left: 20px"
+          required
+          [(ngModel)]="patternTemplateNumber.highLimit"
+          (ngModelChange)="validatePercent()"
+        />
+      </div>
+
+      <div class="form-row">
+        <label style="margin-left: 20px; width: 200px">Шаг: </label>
+
+        <input
+          style="max-width: 200px; margin-left: 20px"
+          required
+          [(ngModel)]="patternTemplateNumber.incrementStep"
+          (ngModelChange)="validatePercent()"
+        />
+      </div>
+
+      <p-button
+        [label]="validatePattern()? 'Паттерн готов': 'Паттерн не готов'"
+        [disabled]="true"
+      ></p-button>
+
+    </div >
+
+    <p-dataView *ngIf="config" #dataView [value]="configList" [paginator]="false">
+      <p-header>
+        Состояние
+      </p-header>
+      <ng-template let-item pTemplate="listItem">
+        <div class="form-row">
+          <label style="width: 250px">{{item.name}}</label>
+          <input
+            [disabled]="true"
+            [(ngModel)]="item.value"
+            (ngModelChange)="this.configChanged = true"
+          />
+          <p-button
+            label="Выбрать"
+            [disabled]="!isNumberValue(item.value)"
+            (onClick)="onRowClick(item.name, item.value)"
+          ></p-button>
         </div>
       </ng-template>
     </p-dataView>

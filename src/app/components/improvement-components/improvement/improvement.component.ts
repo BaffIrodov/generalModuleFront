@@ -3,6 +3,7 @@ import {ImprovementRequest} from "../../../domain/improvement-domain/improvement
 import {ImprovementService} from "../../../services/improvement-services/improvement.service";
 import {config} from "rxjs";
 import {ConfigMapAsList} from "../../../domain/improvement-domain/configMapAsList";
+import {PatternTemplateNumber} from "../../../domain/improvement-domain/patternTemplateNumber";
 
 @Component({
   selector: 'app-improvement',
@@ -16,7 +17,12 @@ export class ImprovementComponent implements OnInit {
   request: ImprovementRequest = new ImprovementRequest();
   requestValidating: boolean = true;
   config: Map<String, Object>;
+  configMap: Map<String, Object> = new Map<String, Object>();
   configList: ConfigMapAsList[] = [];
+
+  patternName: String;
+  patternOldValue: number;
+  patternTemplateNumber: PatternTemplateNumber = new PatternTemplateNumber();
 
   configChanged = false;
 
@@ -35,6 +41,17 @@ export class ImprovementComponent implements OnInit {
 
   async improvementWithConfig() {
     this.improvementService.improvementWithConfig(this.request)
+      .subscribe({
+        next: (res) => {
+          console.log("improvement with config ready")
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async improvementWithConfigAndPattern() {
+    this.saveConfig();
+    this.improvementService.improvementWithConfigAndPattern(this.request, this.patternTemplateNumber)
       .subscribe({
         next: (res) => {
           console.log("improvement with config ready")
@@ -68,6 +85,7 @@ export class ImprovementComponent implements OnInit {
       let item = new ConfigMapAsList();
       item.name = k;
       item.value = v;
+      this.configMap.set(k, v);
       this.configList.push(item);
       index++;
     })
@@ -75,6 +93,23 @@ export class ImprovementComponent implements OnInit {
 
   validatePercent() {
     this.requestValidating = this.request.testDatasetPercent < 100;
+  }
+
+  validatePattern() {
+    return (!!this.patternTemplateNumber.incrementStep &&
+      !!this.patternTemplateNumber.highLimit &&
+      !!this.patternTemplateNumber.lowLimit &&
+      !!this.patternTemplateNumber.configPropertyName)
+  }
+
+  isNumberValue(value: any) {
+    return !isNaN(Number.parseInt(value.toString()));
+  }
+
+  onRowClick(configPropertyName: string, value: any) {
+    this.patternName = configPropertyName;
+    this.patternOldValue = Number.parseFloat(value.toString());
+    this.patternTemplateNumber.configPropertyName = configPropertyName;
   }
 
 }

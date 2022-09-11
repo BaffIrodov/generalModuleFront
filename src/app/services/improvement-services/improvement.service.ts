@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MapsCalculatingQueueResponse} from "../../domain/calculating-domain/MapsCalculatingQueueResponse";
 import {ImprovementRequest} from "../../domain/improvement-domain/improvementRequest";
+import {PatternTemplateNumber} from "../../domain/improvement-domain/patternTemplateNumber";
 
 const url = 'http://localhost:8082/improvement/';
 
@@ -18,8 +19,13 @@ export class ImprovementService {
   }
 
   improvementWithConfig(request: ImprovementRequest): Observable<void> {
-    console.log(request);
     return this.http.post<void>('http://localhost:8082/improvement/with-config', request);
+  }
+
+  improvementWithConfigAndPattern(request: ImprovementRequest, pattern: PatternTemplateNumber): Observable<void> {
+    console.log(request);
+    pattern.improvementRequest = request;
+    return this.http.post<void>('http://localhost:8082/improvement/with-config-and-pattern', pattern);
   }
 
   getConfig(): Observable<Map<String, Object>> {
