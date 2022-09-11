@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {MapsCalculatingQueueResponse} from "../../domain/calculating-domain/MapsCalculatingQueueResponse";
 import {ImprovementRequest} from "../../domain/improvement-domain/improvementRequest";
 
+const url = 'http://localhost:8082/improvement/';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +13,13 @@ export class ImprovementService {
 
   constructor(private http: HttpClient) { }
 
-  simpleImprovement(request: ImprovementRequest): Observable<void> {
+  improvementNoConfig(request: ImprovementRequest): Observable<void> {
     return this.http.post<void>('http://localhost:8082/improvement/no-config', request);
+  }
+
+  improvementWithConfig(request: ImprovementRequest): Observable<void> {
+    console.log(request);
+    return this.http.post<void>('http://localhost:8082/improvement/with-config', request);
   }
 
   getConfig(): Observable<Map<String, Object>> {

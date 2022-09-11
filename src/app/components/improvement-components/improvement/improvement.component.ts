@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ImprovementRequest} from "../../../domain/improvement-domain/improvementRequest";
 import {ImprovementService} from "../../../services/improvement-services/improvement.service";
 import {config} from "rxjs";
-import {ConfigMapAsList} from "../../../domain/improvement-domain/ConfigMapAsList";
+import {ConfigMapAsList} from "../../../domain/improvement-domain/configMapAsList";
 
 @Component({
   selector: 'app-improvement',
@@ -18,22 +18,29 @@ export class ImprovementComponent implements OnInit {
   config: Map<String, Object>;
   configList: ConfigMapAsList[] = [];
 
+  configChanged = false;
+
   ngOnInit(): void {
   }
 
-  async startImprovement() {
-    this.improvementService.simpleImprovement(this.request)
+  async improvementNoConfig() {
+    this.improvementService.improvementNoConfig(this.request)
       .subscribe({
         next: (res) => {
-          console.log("simple improvement ready")
+          console.log("improvement no config ready")
         },
         error: (e) => console.error(e)
       });
   }
 
-  debug() {
-    console.log(this.config);
-    console.log(this.configList);
+  async improvementWithConfig() {
+    this.improvementService.improvementWithConfig(this.request)
+      .subscribe({
+        next: (res) => {
+          console.log("improvement with config ready")
+        },
+        error: (e) => console.error(e)
+      });
   }
 
   async getConfig() {
@@ -45,6 +52,11 @@ export class ImprovementComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  saveConfig() {
+    this.request.configList = this.configList;
+    this.configChanged = false;
   }
 
   convertConfigToList(config: Object) {

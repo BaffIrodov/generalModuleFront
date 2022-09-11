@@ -5,10 +5,10 @@
               pButton type="button"
               class="p-button-raised"
               [disabled]="!request.testDatasetPercent || !requestValidating"
-              (click)="startImprovement()"
+              (click)="improvementNoConfig()"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
-                Остальное останется на датасет расчета"
+                Остальное останется на датасет расчета. Конфиг остается неизменным"
       ></button>
       <input
         class="form-control"
@@ -31,8 +31,8 @@
       <button #startButton
               pButton type="button"
               class="p-button-raised"
-              [disabled]="!request.testDatasetPercent || !requestValidating"
-              (click)="startImprovement()"
+              [disabled]="!request.testDatasetPercent || !requestValidating || configChanged"
+              (click)="improvementWithConfig()"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета"
@@ -60,6 +60,16 @@
             pTooltip="Получаем конфиг и можем изменять его"
     ></button>
 
+    <button #getButton
+            pButton type="button"
+            class="p-button-success"
+            style="margin-left: 20px"
+            (click)="saveConfig()"
+            [disabled] = "!this.configChanged"
+            label="Сохранить конфиг"
+            pTooltip="Сохранить конфиг для передачи на бэк. Без сохранения не получится отправить запрос"
+    ></button>
+
     <p-dataView *ngIf="config" #dataView [value]="configList" [paginator]="false">
       <p-header>
         Состояние
@@ -69,7 +79,7 @@
             <label style="width: 250px">{{item.name}}</label>
             <input
               [(ngModel)]="item.value"
-              (ngModelChange)="debug()"
+              (ngModelChange)="this.configChanged = true"
             />
         </div>
       </ng-template>

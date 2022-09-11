@@ -1,4 +1,4 @@
 export class ConfigMapAsList {
   name: String;
-  value: object;
+  value: Object;
 }
