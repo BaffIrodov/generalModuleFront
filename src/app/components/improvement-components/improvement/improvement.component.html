@@ -207,4 +207,30 @@
       pTooltip="Будет сделано ничего"
     ></button>
   </p-tabPanel>
+  <p-tabPanel header="Результаты улучшений">
+    <div class="form-row">
+      <p-table [columns]="cols" [value]="results">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of cols">
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <button #getButton
+      pButton type="button"
+      label="Результаты"
+      class="p-button-raised"
+      (click)="getImprovementResults()"
+    ></button>
+  </p-tabPanel>
 </p-tabView>

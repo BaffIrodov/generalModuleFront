@@ -89,4 +89,14 @@ export class CalculatingComponent implements OnInit {
       });
   }
 
+  async clearPlayersForces() {
+    this.calculatingService.clearPlayersForces()
+      .subscribe({
+        next: (res) => {
+          console.log("Таблица очищена");
+        },
+        error: (e) => console.error()
+      })
+  }
+
 }

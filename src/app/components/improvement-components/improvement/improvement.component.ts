@@ -4,6 +4,7 @@ import {ImprovementService} from "../../../services/improvement-services/improve
 import {config} from "rxjs";
 import {ConfigMapAsList} from "../../../domain/improvement-domain/configMapAsList";
 import {PatternTemplateNumber} from "../../../domain/improvement-domain/patternTemplateNumber";
+import {ImprovementResultsRequest} from "../../../domain/improvement-domain/improvementResultsRequest";
 
 @Component({
   selector: 'app-improvement',
@@ -26,7 +27,15 @@ export class ImprovementComponent implements OnInit {
 
   configChanged = false;
 
-  ngOnInit(): void {
+  number: number;
+  number2: number;
+  number3: number;
+
+  cols: any[];
+  results: any[];
+
+  async ngOnInit() {
+     this.columnsConstruct();
   }
 
   async improvementNoConfig() {
@@ -110,6 +119,27 @@ export class ImprovementComponent implements OnInit {
     this.patternName = configPropertyName;
     this.patternOldValue = Number.parseFloat(value.toString());
     this.patternTemplateNumber.configPropertyName = configPropertyName;
+  }
+
+  array: ImprovementResultsRequest[] = [];
+  getImprovementResults() {
+    this.improvementService.getImprovementResults()
+      .subscribe({
+        next: (res) => {
+          console.log(res)
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  columnsConstruct() {
+    this.cols = [
+      {field: 'accuracy', header: 'Точность'},
+      {field: 'current_epoch', header: 'Номер эпохи'},
+      {field: 'right_count', header: 'Правильных ответов'},
+      {field: 'all_count', header: 'Всего матчей'},
+      {field: 'full_config', header: 'Конфигурация'},
+    ];
   }
 
 }

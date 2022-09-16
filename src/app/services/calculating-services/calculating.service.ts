@@ -36,4 +36,8 @@ export class CalculatingService {
   resetPlayersForces(): Observable<void> {
     return this.http.get<void>('http://localhost:8081/debug/reset-players-forces');
   }
+
+  clearPlayersForces(): Observable<void> {
+    return this.http.get<void>('http://localhost:8081/debug/clear-players-forces');
+  }
 }
