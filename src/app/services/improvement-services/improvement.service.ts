@@ -34,6 +34,6 @@ export class ImprovementService {
   }
 
   getImprovementResults(): Observable<ImprovementResultsRequest[]> {
-    return this.http.get<ImprovementResultsRequest[]> ('http://localhost:8082/improvement/get-improvement-results');
+    return this.http.get<ImprovementResultsRequest[]> ('http://localhost:8081/improvement/get-improvement-results');
   }
 }

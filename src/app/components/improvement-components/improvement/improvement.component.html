@@ -208,12 +208,22 @@
     ></button>
   </p-tabPanel>
   <p-tabPanel header="Результаты улучшений">
+    <button #getButton
+            style="float: right"
+            pButton type="button"
+            label="Обновить"
+            class="p-button-success"
+            (click)="getImprovementResults()"
+    ></button>
     <div class="form-row">
       <p-table [columns]="cols" [value]="results">
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th *ngFor="let col of columns">
               {{col.header}}
+            </th>
+            <th>
+              {{configuration.header}}
             </th>
           </tr>
         </ng-template>
@@ -222,15 +232,15 @@
             <td *ngFor="let col of cols">
               {{rowData[col.field]}}
             </td>
+            <td>
+              <select style="text-align: left">
+                <option selected>Конфигурация</option>
+                <option *ngFor="let config of rowData[configuration.field]">{{config}}</option>
+              </select>
+            </td>
           </tr>
         </ng-template>
       </p-table>
     </div>
-    <button #getButton
-      pButton type="button"
-      label="Результаты"
-      class="p-button-raised"
-      (click)="getImprovementResults()"
-    ></button>
   </p-tabPanel>
 </p-tabView>

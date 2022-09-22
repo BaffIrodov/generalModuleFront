@@ -3,5 +3,5 @@ export class ImprovementResultsRequest {
   current_epoch: number;
   right_count: number;
   all_count: number;
-  full_config: String;
+  full_config: String[];
 }

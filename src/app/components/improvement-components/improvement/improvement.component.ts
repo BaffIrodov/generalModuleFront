@@ -32,10 +32,12 @@ export class ImprovementComponent implements OnInit {
   number3: number;
 
   cols: any[];
+  configuration: any;
   results: any[];
 
   async ngOnInit() {
      this.columnsConstruct();
+     await this.getImprovementResults();
   }
 
   async improvementNoConfig() {
@@ -121,12 +123,11 @@ export class ImprovementComponent implements OnInit {
     this.patternTemplateNumber.configPropertyName = configPropertyName;
   }
 
-  array: ImprovementResultsRequest[] = [];
-  getImprovementResults() {
+  async getImprovementResults() {
     this.improvementService.getImprovementResults()
       .subscribe({
         next: (res) => {
-          console.log(res)
+          this.results = res;
         },
         error: (e) => console.error(e)
       });
@@ -137,9 +138,9 @@ export class ImprovementComponent implements OnInit {
       {field: 'accuracy', header: 'Точность'},
       {field: 'current_epoch', header: 'Номер эпохи'},
       {field: 'right_count', header: 'Правильных ответов'},
-      {field: 'all_count', header: 'Всего матчей'},
-      {field: 'full_config', header: 'Конфигурация'},
+      {field: 'all_count', header: 'Всего матчей'}
     ];
+    this.configuration = {field: 'full_config', header: 'Конфигурация'};
   }
 
 }
