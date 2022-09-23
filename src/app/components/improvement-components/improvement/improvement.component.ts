@@ -13,7 +13,8 @@ import {ImprovementResultsRequest} from "../../../domain/improvement-domain/impr
 })
 export class ImprovementComponent implements OnInit {
 
-  constructor(private improvementService: ImprovementService) { }
+  constructor(private improvementService: ImprovementService) {
+  }
 
   request: ImprovementRequest = new ImprovementRequest();
   requestValidating: boolean = true;
@@ -36,8 +37,8 @@ export class ImprovementComponent implements OnInit {
   results: any[];
 
   async ngOnInit() {
-     this.columnsConstruct();
-     await this.getImprovementResults();
+    this.columnsConstruct();
+    await this.getImprovementResults();
   }
 
   async improvementNoConfig() {
@@ -102,7 +103,18 @@ export class ImprovementComponent implements OnInit {
     })
   }
 
-  validatePercent() {
+  validatePercent(id: String) {
+    switch (id) {
+      case "number":
+        this.request.testDatasetPercent = this.number;
+        break;
+      case "number2":
+        this.request.testDatasetPercent = this.number2;
+        break;
+      case "number3":
+        this.request.testDatasetPercent = this.number3;
+        break;
+    }
     this.requestValidating = this.request.testDatasetPercent < 100;
   }
 

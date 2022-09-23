@@ -16,8 +16,8 @@
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="request.testDatasetPercent"
-        (ngModelChange)="validatePercent()"
+        [(ngModel)]="number"
+        (ngModelChange)="validatePercent('number')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
@@ -43,8 +43,8 @@
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="request.testDatasetPercent"
-        (ngModelChange)="validatePercent()"
+        [(ngModel)]="number2"
+        (ngModelChange)="validatePercent('number2')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
@@ -103,8 +103,8 @@
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="request.testDatasetPercent"
-        (ngModelChange)="validatePercent()"
+        [(ngModel)]="number3"
+        (ngModelChange)="validatePercent('number3')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
@@ -144,7 +144,7 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.lowLimit"
-          (ngModelChange)="validatePercent()"
+          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
@@ -155,7 +155,7 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.highLimit"
-          (ngModelChange)="validatePercent()"
+          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
@@ -166,7 +166,7 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.incrementStep"
-          (ngModelChange)="validatePercent()"
+          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
