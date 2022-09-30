@@ -7,9 +7,11 @@ import {DebugComponent} from "./components/common-components/debug/debug.compone
 import {ErrorsComponent} from "./components/common-components/errors/errors.component";
 import {CalculatingComponent} from "./components/calculating-components/calculating/calculating.component";
 import {ImprovementComponent} from "./components/improvement-components/improvement/improvement.component";
+import {CheckComponent} from "./components/common-components/check/check.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'results', pathMatch: 'full' },
+  { path: '', redirectTo: 'check', pathMatch: 'full' },
+  { path: 'check', component: CheckComponent},
   { path: 'results', component: ResultsComponent},
   { path: 'stats', component: StatsComponent},
   { path: 'matches', component: MatchesComponent},
