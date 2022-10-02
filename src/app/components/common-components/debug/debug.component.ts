@@ -34,4 +34,14 @@ export class DebugComponent implements OnInit {
       });
   }
 
+  mapsBalance(): void {
+    this.debugService.mapsBalance()
+      .subscribe({
+        next: (res) => {
+          console.log("Баланс карт получен");
+        },
+        error: (e) => console.error(e)
+      })
+  }
+
 }

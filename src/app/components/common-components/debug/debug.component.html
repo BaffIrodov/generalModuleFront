@@ -17,9 +17,9 @@
     pButton type="button"
     class="p-button-raised p-button-rounded"
     routerLink="/errors"
-    style="background-color: brown">
-    Таблица ошибок
-  </button>
+    style="background-color: brown"
+    label="Таблица ошибок"
+  ></button>
   <ng-container>
     <button
       pButton type="button"
@@ -27,5 +27,11 @@
       (click)="getFilesWithDistribution()"
       label="Получить файлы с распределениями">
     </button>
+    <button
+      pButton type="button"
+      class="p-button-raised p-button-rounded"
+      (click)="mapsBalance()"
+      label="Баланс по картам"
+    ></button>
   </ng-container>
 </ng-container>

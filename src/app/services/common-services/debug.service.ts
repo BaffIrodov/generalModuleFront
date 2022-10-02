@@ -18,4 +18,8 @@ export class DebugService {
   filesWithDistribution() {
     return this.http.get<void>(`http://localhost:8081/debug/files-distribution`);
   }
+
+  mapsBalance() {
+    return this.http.get<void>(`http://localhost:8082/debug/maps-balance`);
+  }
 }
