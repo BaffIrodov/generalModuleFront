@@ -61,6 +61,7 @@ import { CalculatingComponent } from './components/calculating-components/calcul
 import { ProgressComponent } from './components/common-components/progress/progress.component';
 import {SplitterModule} from "primeng/splitter";
 import { ImprovementComponent } from './components/improvement-components/improvement/improvement.component';
+import { CheckComponent } from './components/common-components/check/check.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ImprovementComponent } from './components/improvement-components/improv
     ErrorsComponent,
     CalculatingComponent,
     ProgressComponent,
-    ImprovementComponent
+    ImprovementComponent,
+    CheckComponent
   ],
   imports: [
     BrowserModule,

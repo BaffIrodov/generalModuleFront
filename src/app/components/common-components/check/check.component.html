@@ -1,0 +1,209 @@
+<p-toolbar>
+  <div class="ui-g">
+    Микросервис Parsing:
+    <div *ngIf="isParserEnable" style="width: 80px; background-color: palegreen">
+      Включен
+    </div>
+    <div *ngIf="!isParserEnable" style="width: 80px; background-color: palevioletred">
+      Выключен
+    </div>
+    Микросервис Calculating:
+    <div *ngIf="isCalculatingEnable" style="width: 80px; background-color: palegreen">
+      Включен
+    </div>
+    <div *ngIf="!isCalculatingEnable" style="width: 80px; background-color: palevioletred">
+      Выключен
+    </div>
+    Микросервис Improvement:
+    <div *ngIf="isImprovementEnable" style="width: 80px; background-color: palegreen">
+      Включен
+    </div>
+    <div *ngIf="!isImprovementEnable" style="width: 80px; background-color: palevioletred">
+      Выключен
+    </div>
+  </div>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы errors
+  </div>
+  <div *ngIf="isErrorsTableExist" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isErrorsTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isErrorsTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableErrors()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableErrors()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы matches_link
+  </div>
+  <div *ngIf="isMatchesLinkTableExist" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isMatchesLinkTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isMatchesLinkTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableMatchesLink()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableMatchesLink()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы player_on_map_results
+  </div>
+  <div *ngIf="isPlayerOnMapResultsTableExist && isPlayerOnMapResultsTableFilled" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isPlayerOnMapResultsTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isPlayerOnMapResultsTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTablePlayerOnMapResults()"
+  ></button>
+  <div *ngIf="isPlayerOnMapResultsTableExist && !isPlayerOnMapResultsTableFilled" style="width: 120px; background-color: palevioletred">
+    Ошибка: таблица пустая
+  </div>
+  <button pButton type="button" style="width: 110px" (click)="checkTablePlayerOnMapResults()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы results_link
+  </div>
+  <div *ngIf="isResultsLinkTableExist && isResultsLinkTableFilled" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isResultsLinkTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isResultsLinkTableExist" pButton type="button" style="width: 150px"
+    label="Создать таблицу и сиквенс с нуля" (click)="createTableResultsLink()"
+  ></button>
+  <div *ngIf="isResultsLinkTableExist && !isResultsLinkTableFilled" style="width: 120px; background-color: palevioletred">
+    Ошибка: таблица пустая
+  </div>
+  <button pButton type="button" style="width: 110px" (click)="checkTableResultsLink()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы round_history
+  </div>
+  <div *ngIf="isRoundHistoryTableExist && isRoundHistoryTableFilled" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isRoundHistoryTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isRoundHistoryTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableRoundHistory()"
+  ></button>
+  <div *ngIf="isRoundHistoryTableExist && !isRoundHistoryTableFilled" style="width: 120px; background-color: palevioletred">
+    Ошибка: таблица пустая
+  </div>
+  <button pButton type="button" style="width: 110px" (click)="checkTableRoundHistory()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы stats_response
+  </div>
+  <div *ngIf="isStatsResponseTableExist" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isStatsResponseTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isStatsResponseTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableStatsResponse()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableStatsResponse()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы improvement_results
+  </div>
+  <div *ngIf="isImprovementResultsTableExist" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isImprovementResultsTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isImprovementResultsTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableImprovementResults()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableImprovementResults()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы maps_calculating_queue
+  </div>
+  <div *ngIf="isMapsCalculatingQueueTableExist && isMapsCalculatingQueueTableFilled" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isMapsCalculatingQueueTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isMapsCalculatingQueueTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableMapsCalculatingQueue()"
+  ></button>
+  <div *ngIf="isMapsCalculatingQueueTableExist && !isMapsCalculatingQueueTableFilled" style="width: 120px; background-color: palevioletred">
+    Ошибка: таблица пустая
+  </div>
+  <button *ngIf="isMapsCalculatingQueueTableExist && !isMapsCalculatingQueueTableFilled"
+          pButton type="button" style="width: 150px" (click)="initMapsCalculatingQueueTable()"
+          label="Инициировать таблицу (очередь)"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableMapsCalculatingQueue()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
+    Проверка таблицы player_force
+  </div>
+  <div *ngIf="isPlayerForceTableExist && isPlayerForceTableFilled" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isPlayerForceTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isPlayerForceTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTablePlayerForce()"
+  ></button>
+  <div *ngIf="isPlayerForceTableExist && !isPlayerForceTableFilled" style="width: 120px; background-color: palevioletred">
+    Ошибка: таблица пустая
+  </div>
+  <button *ngIf="isPlayerForceTableExist && !isPlayerForceTableFilled" pButton type="button" style="width: 150px"
+          label="Создать таблицу по конфигу" (click)="initPlayerForceTable()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTablePlayerForce()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
