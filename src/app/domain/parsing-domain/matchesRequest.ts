@@ -4,6 +4,7 @@ export class MatchesRequest {
   leftTeam: String;
   rightTeam: String;
   matchFormat: String;
+  matchDate: String;
   matchMapsNames: String[];
   leftTeamOdds: String;
   rightTeamOdds: String;
