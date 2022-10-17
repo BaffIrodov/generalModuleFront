@@ -8,4 +8,6 @@ export class MatchesRequest {
   leftTeamOdds: String;
   rightTeamOdds: String;
   matchTime: number;
+  mapsPredict: Map<String, String> = new Map<String, String>();
+  mapsPredictChanged: String[];
 }

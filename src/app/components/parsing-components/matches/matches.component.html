@@ -1,18 +1,16 @@
-<p>matches works! (*￣▽￣)b</p>
-
 <div>
 
   <p-toolbar>
     <div>
       <button
-        (click)="getMatchesCount()"
+        (click)="getMatches()"
         pButton type="button"
         class="p-button-raised p-button-rounded"
-        [disabled]="writeButtonIsAvailable"
+        [disabled]="writeButtonIsNotAvailable"
         label="Распарсить Matches"
       ></button>
 
-      <label *ngIf="writeButtonIsAvailable" class="form-text text-danger"
+      <label *ngIf="writeButtonIsNotAvailable" class="form-text text-danger"
              style="display: inline-block; margin-left: 5px">
         Идёт парсинг</label>
     </div>
@@ -36,10 +34,10 @@
     </div>
   </p-toolbar>
 
-  <div *ngIf="matches"> Всего доступно матчей: {{matches}}</div>
-  <div *ngIf="fullTime"> Полное время парсинга: {{fullTime}}</div>
+  <div *ngIf="false && matches"> Всего доступно матчей: {{matches}}</div>
+  <div *ngIf="false && fullTime"> Полное время парсинга: {{fullTime}}</div>
   <div>
-    <app-progress #progressComponent [moduleName]="'matches'"></app-progress>
+    <app-progress *ngIf="false" #progressComponent [moduleName]="'matches'"></app-progress>
   </div>
 
   <p-table [columns]="cols" [value]="matchesArr" [scrollable]="true" scrollHeight="600px" [virtualScroll]="false"
@@ -82,6 +80,12 @@
             <select style="text-align: center; width: 50%">
               <option selected>Карты</option>
               <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
+            </select>
+          </div>
+          <div class="centerText">
+            <select [style]="match.mapsPredictChanged.length > 0? 'text-align: center; width: 50%; color: red': 'text-align: center; width: 50%;'">
+              <option selected>Предикты</option>
+              <option disabled *ngFor="let predict of match.mapsPredictChanged">{{predict}}</option>
             </select>
           </div>
         </td>

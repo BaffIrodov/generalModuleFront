@@ -3,6 +3,7 @@ import {MatchesService} from "../../../services/parsing-services/matches.service
 import {MatchesRequest} from "../../../domain/parsing-domain/matchesRequest";
 import {ProgressService} from "../../../services/common-services/progress.service";
 import {ProgressComponent} from "../../common-components/progress/progress.component";
+import {MatchesFullRequest} from "../../../domain/parsing-domain/matchesFullRequest";
 
 @Component({
   selector: 'app-matches',
@@ -17,15 +18,15 @@ export class MatchesComponent implements OnInit {
   @ViewChild('progressComponent') progressComponent: ProgressComponent;
 
   async ngOnInit() {
-    await this.getMatchesFromDB();
+    await this.getMatchesFromDB(); //deprecated - вообще то надо мапу предиктов писать в базу по-хорошему. Но парсинг очень быстрый - можно подождать 10 секунд
     this.columnsConstruct();
-    setTimeout(() => {
-      this.progressComponent.ngOnInit();
-    }, 500);
+    // setTimeout(() => {
+    //   this.progressComponent.ngOnInit();
+    // }, 500);
   }
 
   moduleName = 'matches';
-  writeButtonIsAvailable = false;
+  writeButtonIsNotAvailable = false;
   matches: number;
   matchesArr: MatchesRequest[] = [];
   matchesUrl: String[] = [];
@@ -33,7 +34,7 @@ export class MatchesComponent implements OnInit {
   processedMatches: number = 0;
   cols: any[];
 
-  getMatchesCount() {
+  getMatchesCount() { //deprecated
     this.clearMatches();
     this.resetButton();
     this.getMatchesCountInDB();
@@ -49,26 +50,51 @@ export class MatchesComponent implements OnInit {
     this.getMatches();
   }
 
-  getMatches() {
-    let i = 0;
-    let interval = setInterval(() => {
-      if (i == this.matches || !this.writeButtonIsAvailable) {
-        clearInterval(interval);
-        this.progressService.mapComponentToLoading.set(this.moduleName, false);
-      } else {
-        this.matchesService.writeOneMatch(this.matchesUrl[i]).subscribe({
-          next: (matchInfo) => {
-            //this.matchesArr.push(matchInfo);
-            this.matchesArr = [...this.matchesArr, matchInfo];
-            this.fullTime += matchInfo.matchTime;
-            this.progressComponent.getPredictableTime();
-            this.progressService.mapComponentToLoading.set(this.moduleName, true);
-            this.progressService.mapComponentToStartTime.set(this.moduleName, new Date().getTime());
-          }, error: (e) => console.error(e)
+  changeMapPredictToArray() {
+    let ok = new Map<String, String>();
+    this.matchesArr.forEach(match => {
+      ok = match.mapsPredict;
+      match.mapsPredictChanged = [];
+      console.log(match.mapsPredict);
+        console.log("OK");
+        Object.keys(match.mapsPredict).forEach(key => {
+          match.mapsPredictChanged.push(key + " - " + match.mapsPredict.get(key));
         });
-        i++;
-      }
-    }, 600);
+    })
+    console.log(this.matchesArr);
+  }
+
+  getMatches() {
+    // let i = 0;
+    this.writeButtonIsNotAvailable = true;
+    this.matchesService.writeMatchesLinks()
+      .subscribe({
+        next: (res) => {
+          this.matchesArr = res.matches;
+          // this.changeMapPredictToArray();
+          console.log(this.matchesArr);
+          this.writeButtonIsNotAvailable = false;
+        },
+        error: (e) => console.error(e)
+      });
+    // let interval = setInterval(() => {
+    //   if (i == this.matches || !this.writeButtonIsNotAvailable) {
+    //     clearInterval(interval);
+    //     this.progressService.mapComponentToLoading.set(this.moduleName, false);
+    //   } else {
+    //     this.matchesService.writeOneMatch(this.matchesUrl[i]).subscribe({
+    //       next: (matchInfo) => {
+    //         //this.matchesArr.push(matchInfo);
+    //         this.matchesArr = [...this.matchesArr, matchInfo];
+    //         this.fullTime += matchInfo.matchTime;
+    //         this.progressComponent.getPredictableTime();
+    //         this.progressService.mapComponentToLoading.set(this.moduleName, true);
+    //         this.progressService.mapComponentToStartTime.set(this.moduleName, new Date().getTime());
+    //       }, error: (e) => console.error(e)
+    //     });
+    //     i++;
+    //   }
+    // }, 600);
   }
 
   async getMatchesCountInDB() {
@@ -79,7 +105,7 @@ export class MatchesComponent implements OnInit {
           this.progressService.mapComponentToAvailable.set(this.moduleName, this.matches - count.valueOf());
           this.progressComponent.refresh();
           if (this.matches == count.valueOf()) {
-            this.writeButtonIsAvailable = false;
+            this.writeButtonIsNotAvailable = false;
             clearInterval(interval);
           }
         }, error: (e) => console.error(e)
@@ -91,7 +117,7 @@ export class MatchesComponent implements OnInit {
     this.matchesService.getMatchesFromDB().subscribe({
       next: (matches) => {
         if (!!matches) {
-          this.matches = this.progressService.mapComponentToTotal.get(this.moduleName)!.valueOf();
+          // this.matches = this.progressService.mapComponentToTotal.get(this.moduleName)!.valueOf();
           this.matchesArr = matches;
           matches.forEach(elem => this.fullTime += elem.matchTime);
         }
@@ -120,18 +146,18 @@ export class MatchesComponent implements OnInit {
     this.fullTime = 0;
     this.matches = 0;
     this.matchesArr = [];
-    this.writeButtonIsAvailable = false;
+    this.writeButtonIsNotAvailable = false;
   }
 
   stopLoading() {
-    this.writeButtonIsAvailable = false;
+    this.writeButtonIsNotAvailable = false;
   }
 
   async resetButton() {
-    this.writeButtonIsAvailable = true;
+    this.writeButtonIsNotAvailable = true;
     let interval = setInterval(() => {
       if (this.matchesArr.length == this.matches.valueOf()) {
-        this.writeButtonIsAvailable = false;
+        this.writeButtonIsNotAvailable = false;
         clearInterval(interval);
       }
     }, 1000);
