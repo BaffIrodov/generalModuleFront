@@ -28,9 +28,10 @@ export class ImprovementComponent implements OnInit {
 
   configChanged = false;
 
-  number: number;
-  number2: number;
-  number3: number;
+  numberInactivePercent: number;
+  numberSimple: number;
+  numberChangeConfig: number;
+  numberPattern: number;
 
   cols: any[];
   configuration: any;
@@ -39,6 +40,16 @@ export class ImprovementComponent implements OnInit {
   async ngOnInit() {
     this.columnsConstruct();
     await this.getImprovementResults();
+  }
+
+  async improvementInactivePercent() {
+    this.improvementService.improvementInactivePercent(this.request)
+      .subscribe({
+        next: (res) => {
+          console.log("improvement with inactive percent ready")
+        },
+        error: (e) => console.error(e)
+      });
   }
 
   async improvementNoConfig() {
@@ -105,14 +116,17 @@ export class ImprovementComponent implements OnInit {
 
   validatePercent(id: String) {
     switch (id) {
-      case "number":
-        this.request.testDatasetPercent = this.number;
+      case "number-inactive-percent":
+        this.request.testDatasetPercent = this.numberInactivePercent;
         break;
-      case "number2":
-        this.request.testDatasetPercent = this.number2;
+      case "number-simple":
+        this.request.testDatasetPercent = this.numberSimple;
         break;
-      case "number3":
-        this.request.testDatasetPercent = this.number3;
+      case "number-change-config":
+        this.request.testDatasetPercent = this.numberChangeConfig;
+        break;
+      case "number-pattern":
+        this.request.testDatasetPercent = this.numberPattern;
         break;
     }
     this.requestValidating = this.request.testDatasetPercent < 100;

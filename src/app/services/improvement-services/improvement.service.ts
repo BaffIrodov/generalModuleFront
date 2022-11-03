@@ -15,6 +15,10 @@ export class ImprovementService {
 
   constructor(private http: HttpClient) { }
 
+  improvementInactivePercent(request: ImprovementRequest): Observable<void> {
+    return this.http.post<void>(url + 'inactive-percent', request);
+  }
+
   improvementNoConfig(request: ImprovementRequest): Observable<void> {
     return this.http.post<void>(url + 'no-config', request);
   }

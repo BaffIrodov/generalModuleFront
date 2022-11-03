@@ -1,7 +1,33 @@
 <p-tabView xmlns="http://www.w3.org/1999/html">
+  <p-tabPanel header="Расчет с инактив процентом">
+    <div class="form-row">
+      <button
+              pButton type="button"
+              class="p-button-raised"
+              [disabled]="!request.testDatasetPercent || !requestValidating"
+              (click)="improvementInactivePercent()"
+              label="Множественный расчет с инактив процентом, укажите актив процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+                Остальное останется на инактив датасет и датасет расчета. Конфиг остается неизменным"
+      ></button>
+      <input
+        class="form-control"
+        id="number-inactive-percent"
+        style="max-width: 200px; margin-left: 20px"
+        title="Количество страниц"
+        required
+        [(ngModel)]="numberInactivePercent"
+        (ngModelChange)="validatePercent('number-inactive-percent')"
+        name="description"
+      />
+      <label *ngIf="!requestValidating" style="margin-left: 20px">
+        Запрос составлен неверно
+      </label>
+    </div>
+  </p-tabPanel>
   <p-tabPanel header="Простой расчет">
     <div class="form-row">
-      <button #startButton
+      <button
               pButton type="button"
               class="p-button-raised"
               [disabled]="!request.testDatasetPercent || !requestValidating"
@@ -12,12 +38,12 @@
       ></button>
       <input
         class="form-control"
-        id="number"
+        id="number-simple"
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="number"
-        (ngModelChange)="validatePercent('number')"
+        [(ngModel)]="numberSimple"
+        (ngModelChange)="validatePercent('number-simple')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
@@ -27,7 +53,7 @@
   </p-tabPanel>
   <p-tabPanel header="Простой расчет с правкой конфига">
     <div class="form-row">
-      <button #startButton
+      <button
               pButton type="button"
               class="p-button-raised"
               [disabled]="!request.testDatasetPercent || !requestValidating || configChanged"
@@ -39,12 +65,12 @@
       ></button>
       <input
         class="form-control"
-        id="number2"
+        id="number-change-config"
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="number2"
-        (ngModelChange)="validatePercent('number2')"
+        [(ngModel)]="numberChangeConfig"
+        (ngModelChange)="validatePercent('number-change-config')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
@@ -87,7 +113,7 @@
   </p-tabPanel>
   <p-tabPanel header="Расчет с паттернами для конфига">
     <div class="form-row">
-      <button #startButton
+      <button
               pButton type="button"
               class="p-button-raised"
               [disabled]="!request.testDatasetPercent || !requestValidating || configChanged || !validatePattern()"
@@ -99,12 +125,12 @@
       ></button>
       <input
         class="form-control"
-        id="number3"
+        id="number-pattern"
         style="max-width: 200px; margin-left: 20px"
         title="Количество страниц"
         required
-        [(ngModel)]="number3"
-        (ngModelChange)="validatePercent('number3')"
+        [(ngModel)]="numberPattern"
+        (ngModelChange)="validatePercent('number-pattern')"
         name="description"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
