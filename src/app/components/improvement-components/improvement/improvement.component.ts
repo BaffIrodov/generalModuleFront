@@ -28,10 +28,9 @@ export class ImprovementComponent implements OnInit {
 
   configChanged = false;
 
-  numberInactivePercent: number;
-  numberSimple: number;
-  numberChangeConfig: number;
-  numberPattern: number;
+  testDataPercent: number;
+  testDataCount: number;
+  inactiveRepeatNumber: number;
 
   cols: any[];
   configuration: any;
@@ -57,6 +56,26 @@ export class ImprovementComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log("improvement no config ready")
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async improvementShuffling() {
+    this.improvementService.improvementShuffling(this.request)
+      .subscribe({
+        next: (res) => {
+          console.log("improvement shuffling ready")
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  async improvementConsensus() {
+    this.improvementService.improvementConsensus(this.request)
+      .subscribe({
+        next: (res) => {
+          console.log("improvement consensus ready")
         },
         error: (e) => console.error(e)
       });
@@ -114,22 +133,14 @@ export class ImprovementComponent implements OnInit {
     })
   }
 
-  validatePercent(id: String) {
-    switch (id) {
-      case "number-inactive-percent":
-        this.request.testDatasetPercent = this.numberInactivePercent;
-        break;
-      case "number-simple":
-        this.request.testDatasetPercent = this.numberSimple;
-        break;
-      case "number-change-config":
-        this.request.testDatasetPercent = this.numberChangeConfig;
-        break;
-      case "number-pattern":
-        this.request.testDatasetPercent = this.numberPattern;
-        break;
-    }
+  validatePercent() {
+    this.request.testDatasetPercent = this.testDataPercent;
     this.requestValidating = this.request.testDatasetPercent < 100;
+  }
+
+  validateCount() {
+    this.request.testDatasetCount = this.testDataCount;
+    this.requestValidating = this.request.testDatasetCount <= 1000;
   }
 
   validatePattern() {

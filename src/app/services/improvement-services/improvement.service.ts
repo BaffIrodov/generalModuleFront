@@ -23,6 +23,14 @@ export class ImprovementService {
     return this.http.post<void>(url + 'no-config', request);
   }
 
+  improvementShuffling(request: ImprovementRequest): Observable<void> {
+    return this.http.post<void>(url + 'shuffling', request);
+  }
+
+  improvementConsensus(request: ImprovementRequest): Observable<void> {
+    return this.http.post<void>(url + 'consensus', request);
+  }
+
   improvementWithConfig(request: ImprovementRequest): Observable<void> {
     return this.http.post<void>(url + 'with-config', request);
   }

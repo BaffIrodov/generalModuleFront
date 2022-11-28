@@ -1,97 +1,140 @@
 <p-tabView xmlns="http://www.w3.org/1999/html">
-  <p-tabPanel header="Расчет с инактив процентом">
+  <p-tabPanel header="Инактив процентом">
     <div class="form-row">
-      <button
-              pButton type="button"
-              class="p-button-raised"
-              [disabled]="!request.testDatasetPercent || !requestValidating"
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount) || !requestValidating"
               (click)="improvementInactivePercent()"
-              label="Множественный расчет с инактив процентом, укажите актив процент: "
+              label="Множественный расчет с инактив процентом: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на инактив датасет и датасет расчета. Конфиг остается неизменным"
       ></button>
-      <input
-        class="form-control"
-        id="number-inactive-percent"
-        style="max-width: 200px; margin-left: 20px"
-        title="Количество страниц"
-        required
-        [(ngModel)]="numberInactivePercent"
-        (ngModelChange)="validatePercent('number-inactive-percent')"
-        name="description"
+      <label style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
-        Запрос составлен неверно
+        Запрос составлен неверно / Или выбрано много матчей
       </label>
     </div>
   </p-tabPanel>
   <p-tabPanel header="Простой расчет">
     <div class="form-row">
-      <button
-              pButton type="button"
-              class="p-button-raised"
-              [disabled]="!request.testDatasetPercent || !requestValidating"
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount) || !requestValidating"
               (click)="improvementNoConfig()"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета. Конфиг остается неизменным"
       ></button>
-      <input
-        class="form-control"
-        id="number-simple"
-        style="max-width: 200px; margin-left: 20px"
-        title="Количество страниц"
-        required
-        [(ngModel)]="numberSimple"
-        (ngModelChange)="validatePercent('number-simple')"
-        name="description"
+      <label style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
-        Запрос составлен неверно
+        Запрос составлен неверно / Или выбрано много матчей
       </label>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Простой расчет с правкой конфига">
+  <p-tabPanel header="Шафлинг">
     <div class="form-row">
-      <button
-              pButton type="button"
-              class="p-button-raised"
-              [disabled]="!request.testDatasetPercent || !requestValidating || configChanged"
-              (click)="improvementWithConfig()"
-              style="margin-left: 5px"
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount) || !requestValidating"
+              (click)="improvementShuffling()"
+              label="Бесконечный расчет с рандомным конфигом, укажите процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+                Остальное останется на датасет расчета. Конфиг всегда изменяется"
+      ></button>
+      <label style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
+      />
+      <label *ngIf="!requestValidating" style="margin-left: 20px">
+        Запрос составлен неверно / Или выбрано много матчей
+      </label>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Консенсус">
+    <div class="form-row">
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount) || !requestValidating"
+              (click)="improvementConsensus()"
+              label="Единичный расчет с консенсусом, укажите актив процент: "
+              pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
+                Остальное останется на датасет расчета. Конфиг остается неизменным."
+      ></button>
+      <label *ngIf="false" style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input *ngIf="false" class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
+      />
+      <label *ngIf="!requestValidating" style="margin-left: 20px">
+        Запрос составлен неверно / Или выбрано много матчей
+      </label>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Правка конфига">
+    <div class="form-row">
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount) || !requestValidating || configChanged"
+              (click)="improvementWithConfig()" style="margin-left: 5px"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета"
       ></button>
-      <input
-        class="form-control"
-        id="number-change-config"
-        style="max-width: 200px; margin-left: 20px"
-        title="Количество страниц"
-        required
-        [(ngModel)]="numberChangeConfig"
-        (ngModelChange)="validatePercent('number-change-config')"
-        name="description"
+      <label style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
-        Запрос составлен неверно
+        Запрос составлен неверно / Или выбрано много матчей
       </label>
     </div>
 
-    <button #getButton
-            pButton type="button"
-            class="p-button-raised"
-            (click)="getConfig()"
-            label="Получить конфиг"
-            pTooltip="Получаем конфиг и можем изменять его"
+    <button pButton type="button" class="p-button-raised" (click)="getConfig()"
+            label="Получить конфиг" pTooltip="Получаем конфиг и можем изменять его"
     ></button>
 
-    <button #getButton
-            pButton type="button"
-            class="p-button-success"
-            style="margin-left: 20px"
-            (click)="saveConfig()"
-            [disabled]="!this.configChanged"
+    <button pButton type="button" class="p-button-success" style="margin-left: 20px"
+            (click)="saveConfig()" [disabled]="!this.configChanged"
             label="Сохранить конфиг"
             pTooltip="Сохранить конфиг для передачи на бэк. Без сохранения не получится отправить запрос"
     ></button>
@@ -111,48 +154,39 @@
       </ng-template>
     </p-dataView>
   </p-tabPanel>
-  <p-tabPanel header="Расчет с паттернами для конфига">
+  <p-tabPanel header="Паттерн для конфига">
     <div class="form-row">
-      <button
-              pButton type="button"
-              class="p-button-raised"
-              [disabled]="!request.testDatasetPercent || !requestValidating || configChanged || !validatePattern()"
-              (click)="improvementWithConfigAndPattern()"
-              style="margin-left: 5px"
+      <button pButton type="button" class="p-button-raised"
+              [disabled]="(request.testDatasetCount && request.testDatasetPercent) || (!request.testDatasetPercent && !request.testDatasetCount)
+              || !requestValidating || configChanged || !validatePattern()"
+              (click)="improvementWithConfigAndPattern()" style="margin-left: 5px"
               label="Одиночный расчет с фиксированным процентом, укажите процент: "
               pTooltip="Здесь заполняется процент: сколько пойдет на тестовый датасет.
                 Остальное останется на датасет расчета"
       ></button>
-      <input
-        class="form-control"
-        id="number-pattern"
-        style="max-width: 200px; margin-left: 20px"
-        title="Количество страниц"
-        required
-        [(ngModel)]="numberPattern"
-        (ngModelChange)="validatePercent('number-pattern')"
-        name="description"
+      <label style="margin-left: 5px; margin-top: 5px">
+        %:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataPercent" (ngModelChange)="validatePercent()"
+      />
+      <label style="margin-left: 5px; margin-top: 5px">
+        Кол-во:
+      </label>
+      <input class="form-control" style="max-width: 200px; margin-left: 20px"
+             title="Количество страниц" required [(ngModel)]="testDataCount" (ngModelChange)="validateCount()"
       />
       <label *ngIf="!requestValidating" style="margin-left: 20px">
-        Запрос составлен неверно
+        Запрос составлен неверно / Или выбрано много матчей
       </label>
     </div>
 
-    <button #getButton
-            pButton type="button"
-            class="p-button-raised"
-            (click)="getConfig()"
-            label="Получить конфиг"
-            pTooltip="Получаем конфиг и можем изменять его"
+    <button pButton type="button" class="p-button-raised"
+            (click)="getConfig()" label="Получить конфиг" pTooltip="Получаем конфиг и можем изменять его"
     ></button>
 
-    <button #saveButton
-            pButton type="button"
-            class="p-button-success"
-            style="margin-left: 20px"
-            (click)="saveConfig()"
-            [disabled]="!this.configChanged"
-            label="Сохранить конфиг"
+    <button pButton type="button" class="p-button-success" style="margin-left: 20px"
+            (click)="saveConfig()" [disabled]="!this.configChanged" label="Сохранить конфиг"
             pTooltip="Сохранить конфиг для передачи на бэк. Без сохранения не получится отправить запрос"
     ></button>
 
@@ -170,7 +204,6 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.lowLimit"
-          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
@@ -181,7 +214,6 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.highLimit"
-          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
@@ -192,7 +224,6 @@
           style="max-width: 200px; margin-left: 20px"
           required
           [(ngModel)]="patternTemplateNumber.incrementStep"
-          (ngModelChange)="validatePercent('number3')"
         />
       </div>
 
@@ -201,7 +232,7 @@
         [disabled]="true"
       ></p-button>
 
-    </div >
+    </div>
 
     <p-dataView *ngIf="config" #dataView [value]="configList" [paginator]="false">
       <p-header>
@@ -223,15 +254,6 @@
         </div>
       </ng-template>
     </p-dataView>
-  </p-tabPanel>
-  <p-tabPanel header="Улучшатор">
-    <button
-      pButton type="button"
-      style="margin-left: 5px"
-      class="p-button-danger"
-      label="Ничего не делать"
-      pTooltip="Будет сделано ничего"
-    ></button>
   </p-tabPanel>
   <p-tabPanel header="Результаты улучшений">
     <button #getButton
