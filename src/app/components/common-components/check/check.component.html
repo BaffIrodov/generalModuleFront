@@ -21,6 +21,13 @@
     <div *ngIf="!isImprovementEnable" style="width: 80px; background-color: palevioletred">
       Выключен
     </div>
+    Микросервис TelegramBot:
+    <div *ngIf="isTelegramBotEnable" style="width: 80px; background-color: palegreen">
+      Включен
+    </div>
+    <div *ngIf="!isTelegramBotEnable" style="width: 80px; background-color: palevioletred">
+      Выключен
+    </div>
   </div>
 </p-toolbar>
 

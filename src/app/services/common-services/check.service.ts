@@ -20,6 +20,9 @@ export class CheckService {
   isImprovementServiceEnable(): Observable<boolean> {
     return this.http.get<boolean>('http://localhost:8082/debug/enabled');
   }
+  isTelegramBotEnable(): Observable<boolean> {
+    return this.http.get<boolean>('http://localhost:8083/debug/enabled');
+  }
 
   //Проверка и дебаг таблицы errors
   isErrorsTableExist(): Observable<boolean> {

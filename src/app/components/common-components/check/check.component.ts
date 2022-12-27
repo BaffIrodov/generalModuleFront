@@ -12,6 +12,7 @@ export class CheckComponent implements OnInit {
   isParserEnable: boolean;
   isCalculatingEnable: boolean;
   isImprovementEnable: boolean;
+  isTelegramBotEnable: boolean;
 
   isErrorsTableExist: boolean;
 
@@ -80,6 +81,13 @@ export class CheckComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.isImprovementEnable = res;
+        },
+        error: (e) => console.error(e)
+      });
+    this.checkService.isTelegramBotEnable()
+      .subscribe({
+        next: (res) => {
+          this.isTelegramBotEnable = res;
         },
         error: (e) => console.error(e)
       });
