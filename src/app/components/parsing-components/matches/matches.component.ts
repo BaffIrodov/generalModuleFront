@@ -33,6 +33,7 @@ export class MatchesComponent implements OnInit {
   fullTime: number = 0;
   processedMatches: number = 0;
   cols: any[];
+  firstColHeader = 'Действующие матчи';
 
   getMatchesCount() { //deprecated
     this.clearMatches();
@@ -73,6 +74,12 @@ export class MatchesComponent implements OnInit {
           this.matchesArr = res.matches;
           // this.changeMapPredictToArray();
           console.log(this.matchesArr);
+          if (this.matchesArr.length == 0) {
+            this.firstColHeader = 'Не найдено ни одного матча';
+          } else {
+            this.firstColHeader = `Действующие матчи (найдено: ${this.matchesArr.length})`;
+          }
+          this.columnsConstruct();
           this.writeButtonIsNotAvailable = false;
         },
         error: (e) => console.error(e)
@@ -165,7 +172,7 @@ export class MatchesComponent implements OnInit {
 
   columnsConstruct() {
     this.cols = [
-      {header: 'Действующие матчи'}
+      {header: this.firstColHeader}
     ];
   }
 }
