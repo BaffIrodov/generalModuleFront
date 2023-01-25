@@ -35,6 +35,19 @@ export class MatchesComponent implements OnInit {
   cols: any[];
   firstColHeader = 'Действующие матчи';
 
+  equalMapPredict(sp1: String[], sp2: String[]): boolean {
+    let equal = false;
+    for (let elem1 of sp1){
+      for (let elem2 of sp2)
+        if (elem2.includes(elem1.toUpperCase())) {
+          equal = true;
+          break;
+        }
+      if (equal) break;
+    }
+    return equal;
+  }
+
   getMatchesCount() { //deprecated
     this.clearMatches();
     this.resetButton();

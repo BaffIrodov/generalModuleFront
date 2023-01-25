@@ -72,7 +72,12 @@
         </td>
         <td>
           <div class="centerText">
-            <select style="text-align: center; width: 50%">
+            <!--<select style="text-align: center; width: 50%">-->
+            <select [style]="match.mapsPredictChanged.length >= 5?
+                             'text-align: center; width: 50%; color: blue':
+                             match.mapsPredictChanged.length <= 4 && equalMapPredict(match.matchMapsNames,match.mapsPredictChanged)?
+                             'text-align: center; width: 50%; color: green':
+                             'text-align: center; width: 50%;'">
               <option selected>Карты</option>
               <option disabled *ngFor="let map of match.matchMapsNames">{{map}}</option>
             </select>
