@@ -18,6 +18,8 @@ export class CheckComponent implements OnInit {
 
   isMatchesLinkTableExist: boolean;
 
+  isBetConditionTableExist: boolean;
+
   isPlayerOnMapResultsTableExist: boolean;
   isPlayerOnMapResultsTableFilled: boolean;
 
@@ -46,6 +48,7 @@ export class CheckComponent implements OnInit {
     // таблицы parsing
     this.checkTableErrors();
     this.checkTableMatchesLink();
+    this.checkTableBetCondition();
     this.checkTablePlayerOnMapResults();
     this.checkTableResultsLink();
     this.checkTableRoundHistory();
@@ -130,6 +133,27 @@ export class CheckComponent implements OnInit {
         next: (res) => {
           console.log("Matches link table created");
           this.checkTableMatchesLink();
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  checkTableBetCondition() {
+    this.checkService.isBetConditionTableExist()
+      .subscribe({
+        next: (res) => {
+          this.isBetConditionTableExist = res;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  createTableBetCondition() {
+    this.checkService.createBetConditionTable()
+      .subscribe({
+        next: (res) => {
+          console.log("Bet condition table created");
+          this.checkTableBetCondition();
         },
         error: (e) => console.error(e)
       });

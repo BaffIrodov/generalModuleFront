@@ -40,6 +40,14 @@ export class CheckService {
     return this.http.get<void>('http://localhost:8080/debug/create-matches-link');
   }
 
+  //Проверка и дебаг таблицы bet_condition
+  isBetConditionTableExist(): Observable<boolean> {
+    return this.http.get<boolean>('http://localhost:8080/debug/bet-condition-exist');
+  }
+  createBetConditionTable(): Observable<void> {
+    return this.http.get<void>('http://localhost:8080/debug/create-bet-condition');
+  }
+
   //Проверка и дебаг таблицы player_on_map_results
   isPlayerOnMapResultsTableExist(): Observable<boolean> {
     return this.http.get<boolean>('http://localhost:8080/debug/player-on-map-results-exist');

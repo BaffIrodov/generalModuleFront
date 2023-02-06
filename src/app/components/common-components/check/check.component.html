@@ -69,6 +69,24 @@
 
 <p-toolbar>
   <div style="width: 150px">
+    Проверка таблицы bet_condition
+  </div>
+  <div *ngIf="isBetConditionTableExist" style="width: 70px; background-color: palegreen">
+    Успешно
+  </div>
+  <div *ngIf="!isBetConditionTableExist" style="width: 120px; background-color: palevioletred">
+    Ошибка: нет таблицы
+  </div>
+  <button *ngIf="!isBetConditionTableExist" pButton type="button" style="width: 150px"
+          label="Создать таблицу и сиквенс с нуля" (click)="createTableBetCondition()"
+  ></button>
+  <button pButton type="button" style="width: 110px" (click)="checkTableBetCondition()"
+          label="Обновить" class="p-button-success p-button-rounded"
+  ></button>
+</p-toolbar>
+
+<p-toolbar>
+  <div style="width: 150px">
     Проверка таблицы player_on_map_results
   </div>
   <div *ngIf="isPlayerOnMapResultsTableExist && isPlayerOnMapResultsTableFilled" style="width: 70px; background-color: palegreen">
